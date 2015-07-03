@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col-lg-6" ng-repeat="blogPost in blogPosts">
+        <div class="panel" style="  background-color: rgba(255, 255, 255, 0.8); padding: 20px 20px 30px 20px;">
+            <h3>{{blogPost.title}}</h3>
+
+            <p>{{blogPost.description}}</p>
+
+            <p>
+                <span class="label label-primary">{{blogPost.date | asDate | date:'mediumDate'}}</span>
+                        <span
+                                class="label label-primary"><i
+                                class="fa {{blogPost.img}}"></i>
+                        </span>
+            </p>
+
+            <p>
+                <a class="btn btn-default" href="view.php?title={{blogPost.title}}" role="button">View More
+                    »</a> <a
+                    class="btn btn-default" href="view.php?title={{blogPost.title}}#comments" role="button">0
+                Comments
+                »</a>
+            </p>
+        </div>
+    </div>
+</div>

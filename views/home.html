@@ -1,0 +1,25 @@
+<div ng-include="'views/intro.html'"></div>
+
+<div ng-include="'views/about.html'"></div>
+
+<section id="projectsSection" class="hero-header">
+    <div class="hero-layer-blue">
+        <div class="jumbotron container">
+            <h1 style="text-align: center; text-transform: uppercase">Projects</h1>
+            <BR>
+
+            <div ng-include="'partials/projects.html'" ng-controller="FeaturedProjectListCtrl"></div>
+        </div>
+    </div>
+</section>
+
+<section id="blogSection">
+    <div class="jumbotron container">
+        <h1 style="text-align: center; text-transform: uppercase">Blog Posts</h1>
+        <BR>
+
+
+        <div ng-include="'partials/blog.html'" ng-controller="FeaturedBlogListCtrl"></div>
+    </div>
+
+</section>

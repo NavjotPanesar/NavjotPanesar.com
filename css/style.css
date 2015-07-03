@@ -1,0 +1,97 @@
+body {
+    background-color: rgb(234, 236, 236);
+}
+
+section {
+    background-color: white;
+    min-height: 90vh;
+}
+
+.jumbotron {
+    background: none;
+}
+
+.label-primary {
+    background-color: #03a9f4;
+}
+
+.btn-primary {
+    background-image: radial-gradient(circle, #03a9f4 80%, #0d87e9 81%);
+    color: white;
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 20px 20px 30px 20px;
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 2px;
+    border: 0;
+}
+
+.profile-img {
+    padding: 10px;
+    background-color: #eeeeee;
+    background-color: rgba(237, 237, 237, 0.60);
+    overflow: hidden;
+    max-width: 280px;
+    max-height: 280px;
+    margin: 20px;
+    border-radius: 50%;
+    border: 4px solid white;
+}
+
+@media (max-width: 768px) {
+    .profile-img {
+        max-width: 180px;
+        max-height: 180px;
+    }
+}
+
+.contact a {
+    margin: 10px;
+}
+
+.contact i {
+    color: #03a9f4;
+}
+
+.hero-header h1 {
+    color: white;
+}
+
+.hero-intro {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-header {
+    background: #8EC2DA url('../assets/hero-back.jpg') fixed top right;
+}
+
+.hero-layer-blue {
+    background-color: rgba(186, 239, 255, 0.7);
+    width: 100%;
+    height: 100%;
+}
+
+.hero-intro-subtext {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.hero-intro-subtext a {
+    text-decoration: none;
+    color: #00BFFF
+}
+
+.hero-intro-subtext a:hover {
+    text-decoration: none;
+    color: #00d4f4;
+}
+
+.hero-intro-inner {
+    padding-left: 30px;
+    padding-right: 30px;
+}
