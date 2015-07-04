@@ -13,9 +13,9 @@ class Comment{
     public $comment;
     public $date;
 
-    function __construct($name, $comment, $date){
+    function __construct($name, $content, $date){
         $this->name = $name;
-        $this->comment = $comment;
+        $this->content = $content;
         $this->date = $date;
     }
 }
