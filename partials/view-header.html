@@ -1,0 +1,19 @@
+<div class="jumbotron hero-header">
+    <div class="container">
+        <h1>{{post.title}}</h1>
+
+        <p>{{post.description}}</p>
+
+        <p>
+            <span class="label label-primary">
+                {{post.date | asDate | date:'mediumDate'}}</span>
+            <span class="label label-primary">
+                Navjot Panesar
+            </span>
+            <span class="label label-primary"><i
+                    class="fa {{post.img}}"></i>
+            </span>
+        </p>
+
+    </div>
+</div>

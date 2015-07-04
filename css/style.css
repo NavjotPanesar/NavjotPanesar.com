@@ -95,3 +95,26 @@ section {
     padding-left: 30px;
     padding-right: 30px;
 }
+
+.hero-header h1{
+    color: white;
+}
+
+.hero-header p{
+    color: lightyellow;
+}
+
+
+.btn-primary:hover {
+    background-size: 100%;
+    border-color: #0d87e9;
+    color: #ffffff;
+    background-color: #0c7cd5;
+    text-decoration: none;
+}
+
+.btn{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 0;
+}

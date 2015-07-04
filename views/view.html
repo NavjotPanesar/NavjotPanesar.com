@@ -1,0 +1,32 @@
+
+
+<div ng-if="swf" ng-include="'partials/swf.html'"></div>
+
+
+<div ng-include="'partials/view-header.html'"></div>
+
+<div class="container panel card jumbotron" style="padding: 60px;">
+    <p id="content-area">
+        <!-- bbcode will just have to be parsed server side, way easier than trying to hook a js lib into ang for this -->
+        {{post.content}}
+    </p>
+</div>
+
+<div class="container panel card">
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="background-color: #03a9f4">
+            <h1><i class='fa fa-comments-o'></i> Comments </h1>
+        </div>
+    </div>
+
+
+    <div ng-include="'partials/comment-form.html'" ng-controller="CommentCtrl"></div>
+
+</div>
+<script  type="text/javascript">
+    $(document).ready(function(){
+        $(document).on("click", "#commentButton", function() {
+            $("#post").toggle(1000);
+        });
+    });
+</script>
