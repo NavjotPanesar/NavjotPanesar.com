@@ -1,0 +1,20 @@
+<div class="container">
+    <section id="photos" style="background: none;">
+        <!--yeah the old slider is broke af, need to rewrite that too ;(-->
+        <a ng-repeat="image in images" href="slider.html#{{image.url}}">
+            <img ng-src="grab/{{image.url}}" class="photoGridElement"/>
+        </a>
+    </section>
+</div>
+
+<script type="javascript">
+
+    //TODO: need to rewrite this to do it the 'angular' way
+//    $(window).load(function(){
+//        $(".photoGridElement").each(function(index){
+//            alert('iter');
+//            var randomFactor = 10 + Math.floor(Math.random() * 100);
+//            $(this).fadeIn(150*index);
+//        });
+//    });
+</script>

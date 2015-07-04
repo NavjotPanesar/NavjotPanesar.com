@@ -102,6 +102,11 @@ homeApp.controller('CommentCtrl', function ($scope, $http, $filter) {
     };
 });
 
+homeApp.controller('GalleryCtrl', function ($scope, $http, $filter) {
+    $scope.page = {title: "Screenshots", description: "These screenshots are auto-uploaded from a modified version of Gyazo screen capture tool"};
+    $scope.images = [{url: "2c7ae5.png"}];
+});
+
 //angular is cool 8)
 homeApp.filter("asDate", function () {
     return function (input) {
@@ -116,7 +121,8 @@ homeApp.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.
         when("/", {templateUrl: "views/home.html", controller: ""}).
         when("/projects", {templateUrl: "views/projects.html", controller: "ProjectListCtrl"}).
-        when("/blog/", {templateUrl: "views/blog.html", controller: "BlogListCtrl"}).
+        when("/blog", {templateUrl: "views/blog.html", controller: "BlogListCtrl"}).
+        when("/gallery", {templateUrl: "views/gallery.html", controller: "GalleryCtrl"}).
         when("/view/:title/:swf?", {templateUrl: "views/view.html", controller: "ViewPageCtrl"}).
         otherwise({redirectTo: '/drivers'});
 }]);
