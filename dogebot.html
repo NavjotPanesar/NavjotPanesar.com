@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/dogebot.css" rel="stylesheet">
+    <link href="css/extracted-tweet-style.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular-route.min.js"></script>
+    <script src="js/controllers.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dogebot</title>
+
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+</head>
+
+
+<body ng-app="Doge" style="padding-top: 0px; background: #f2f2f2" id="body">
+
+<div style="position: fixed; z-index: 5; top: 0px; right: 0px; margin: 10px;">
+    <a href="http://github.com/NavjotPanesar/Dogebot" class="btn btn-default" role="button"><i class="fa fa-github-alt">
+        Github</i></a>
+</div>
+
+
+<div class="jumbotron hero-header" style="background-image: url('assets/dogebot-back.jpg');">
+    <div class="container">
+        <img src="assets/Doge.png" class="hero-img">
+    </div>
+    <div class="container">
+        <h1 style="display: inline; color: white;"><b>Dogebot</b></h1>
+
+        <h3 style="display: inline; color: lightgray;">Multi purpose twitter bot</h3>
+        <h4 class="text-warning">
+            <a class="text-warning" href="#livefeed">live feed </a> &#8226;
+            <a class="text-warning" href="#graphs">graphs </a> &#8226;
+            <a class="text-warning" href="#completeref">reference</a>
+        </h4>
+    </div>
+
+</div>
+
+<span class="floating_action_button" id="fab">
+    <a href="#body">▲</a>
+</span>
+
+
+<div class="container">
+    <h1 class="text-warning" id="livefeed">Live Feed</h1>
+
+    <div class="col-lg-6">
+        <h3>Tweets being read</h3>
+        <a class="twitter-timeline" href="https://twitter.com/hashtag/dogebot" data-widget-id="526075136135274496">#dogebot
+            Tweets</a>
+        <script>!function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+            if (!d.getElementById(id)) {
+                js = d.createElement(s);
+                js.id = id;
+                js.src = p + "://platform.twitter.com/widgets.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }
+        }(document, "script", "twitter-wjs");</script>
+    </div>
+    <div class="col-lg-6">
+        <h3>Tweets being sent</h3>
+        <a class="twitter-timeline" href="https://twitter.com/Wild_Doge" data-widget-id="526075660192579585">Tweets by
+            @Wild_Doge</a>
+        <script>!function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+            if (!d.getElementById(id)) {
+                js = d.createElement(s);
+                js.id = id;
+                js.src = p + "://platform.twitter.com/widgets.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }
+        }(document, "script", "twitter-wjs");</script>
+    </div>
+</div>
+
+
+<div class="container">
+    <h1 class="text-warning" id="graphs">Graphs and Analytics</h1></BR>
+
+    <h3 class="text-center">Average response time per command</h3>
+
+    <div>
+        <div id="loader1" class="loader">Loading...</div>
+        <canvas id="canvas1"/>
+    </div>
+    <h3 class="text-center">Command usage breakdown</h3>
+
+    <div>
+        <div id="loader2" class="loader">Loading...</div>
+        <canvas id="canvas2"/>
+    </div>
+    <h3 class="text-center">Command usage timeline</h3>
+
+    <div>
+        <div id="loader3" class="loader">Loading...</div>
+        <canvas id="canvas3"/>
+    </div>
+</div>
+
+<div  ng-controller="DogebotCtrl" class="container">
+<h1 class="text-warning" id="completeref">Complete Tweet Reference</h1>
+<table class="table table-striped table-hover ">
+    <thead>
+    <tr>
+        <th style="width: 50%">Sent Tweet</th>
+        <th style="width: 50%">Response Tweet</th>
+    </tr>
+    </thead>
+</table>
+
+<div class="col-lg-6" ng-repeat="tweet in tweets">
+    <div class="panel" style="padding: 15px; margin: 0px 10px 10px 10px;">
+        <div class="media" style="">
+            <a class="pull-left" href="#">
+                <img ng-if="$even" class="media-object" style="width: 48px; height: 48px;"
+                     src="https://pbs.twimg.com/profile_images/459497400600522752/TO5xtY2x_400x400.jpeg" alt="twitpic">
+                <img ng-if="$odd" class="media-object" style="width: 48px; height: 48px;" src="assets/lettuce.jpg"
+                     alt="twitpic">
+            </a>
+
+            <div class="media-body">
+                <h4 class="media-heading small" style="margin-bottom: 0px;">You<b id="B_11">@you</b> <span
+                        style="float:right;">5 Jul</span></h4>
+                {{tweet.content}}<br>
+                <img ng-if="tweet.open" ng-src="http://navjotpanesar.com/images/rekt.gif"  style="max-width: 400px; max-height: 400px; display: block;"/>
+                <i class="fa fa-youtube-play"></i>
+                <a ng-click="tweet.open = !tweet.open" style="cursor: pointer;">show media</a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div ng-controller="CommentCtrl" class="container well well-sm">
+    <div class="panel panel-warning">
+        <div class="panel-heading" >
+            <h1><i class='fa fa-comments-o'></i> Comments </h1>
+        </div>
+    </div>
+
+    <fieldset>
+
+        <form class="form-horizontal" id="post" style="display:none;">
+            <div class="form-group">
+                <label for="inputName" class="col-lg-2 control-label">Name</label>
+
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="inputName" placeholder="Name"  ng-model="comment.name">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="textArea" class="col-lg-2 control-label">Comment</label>
+
+                <div class="col-lg-10">
+                    <textarea name=textArea class="form-control" rows="3" id="textArea" style="resize: none;"  ng-model="comment.content"></textarea>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-lg-10 col-lg-offset-2">
+                    <div class="g-recaptcha" data-sitekey="6LdR_QQTAAAAAJjwzOCiscsZ9wanOMCXT7_ZuwG0"></div>
+                    <button class="btn btn-default" ng-click="reset()">Cancel</button>
+                    <button type="submit" class="btn btn-warning" ng-click="addComment(comment);">Submit</button>
+                </div>
+            </div>
+
+        </form>
+
+        <span id="commentButton" class="btn btn-warning btn-lg btn-block" role="button">Add a comment</span><BR>
+    </fieldset>
+
+
+    <div class="panel panel-default"  ng-repeat="comment in comments">
+        <div class="panel-heading"><span class="label label-warning">{{comment.name}}</span> <span
+                class="label label-warning text-right">{{comment.date | asDate | date:'mediumDate'}}</span></div>
+        <div class="panel-body"><p>{{comment.content}}</p></div>
+    </div>
+
+</div>
+
+
+<script>
+
+
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-49840919-1', 'navjotpanesar.com');
+    ga('require', 'displayfeatures');
+    ga('send', 'pageview');
+
+</script>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="js/jquery.jqplot.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/jquery.jqplot.min.css"/>
+<script language="javascript" type="text/javascript" src="js/jqplot.categoryAxisRenderer.min.js"></script>
+
+<script language="javascript" type="text/javascript" src="js/jqplot.barRenderer.min.js"></script>
+<script language="javascript" type="text/javascript" src="js/humanized_time_span.js"></script>
+<script language="javascript" type="text/javascript" src="js/visible.min.js"></script>
+<script language="javascript" type="text/javascript" src="js/chart.js"></script>
+
+<script type="text/javascript">
+    <!--
+    function toggle_visibility(id) {
+        var e = document.getElementById(id);
+        if (e.style.display == 'block')
+            e.style.display = 'none';
+        else
+            e.style.display = 'block';
+    }
+    //-->
+</script>
+
+<script>
+
+$(document).scroll(function () {
+    if ($(document).scrollTop() < 201) {
+        $('#fab').css("bottom", "-20px");
+    }
+    if ($(document).scrollTop() > 201) {
+        $('#fab').css("bottom", "40px");
+    }
+
+    if ($('#canvas1').visible()) {
+        loadGraph1();
+    }
+    if ($('#canvas2').visible()) {
+        loadGraph2();
+    }
+    if ($('#canvas3').visible()) {
+        loadGraph3();
+    }
+});
+
+$(function () {
+    $('a[href*=#]:not([href=#])').click(function () {
+        if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+            var target = $(this.hash);
+            target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+            if (target.length) {
+                $('html,body').animate({
+                    scrollTop: target.offset().top
+                }, 1000);
+                return false;
+            }
+        }
+    });
+});
+
+
+$(document).ready(function () {
+    $(document).on("click", "#commentButton", function() {
+        $("#post").toggle(1000);
+    });
+    $('#textArea').markItUp(myBbcodeSettings);
+    $('.gif').each(function () {
+        var image = $(this);
+        image.wrap('<div></div>'); //image has to be in a div to slide properlyjquery.jqplot.min.css
+        var imageDiv = image.parent(); //get the div. probably fine to use parent since with just wrapped it
+        imageDiv.hide();
+        var clickToggleIco = jQuery('<i>').attr('class', 'fa fa-youtube-play');
+        var clickToggle = jQuery('<a>').text("show media").css('cursor', 'pointer');
+        imageDiv.after(clickToggle);
+        imageDiv.after(' ');
+        imageDiv.after(clickToggleIco);
+        clickToggle.click(function () {
+            imageDiv.slideToggle("slow");
+        });
+    });
+
+    $("#commentButton").click(function () {
+        $("#post").toggle();
+    });
+
+    var form = $('form');
+    var submit = $('#submit');
+
+    form.on('submit', function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: 'postComment.php',
+            type: 'POST',
+            cache: false,
+            data: form.serialize(), //form serizlize data
+            beforeSend: function () {
+                submit.val('Submitting...').attr('disabled', 'disabled');
+            },
+            success: function (data) {
+                var item = $(data).hide().fadeIn(800);
+                $('#comments').prepend(item);
+
+                // reset form and button
+                form.trigger('reset');
+                submit.val('Submit').removeAttr('disabled');
+            },
+            error: function (e) {
+                //alert(e);
+            }
+        });
+    });
+
+});
+
+var graphs1loaded = false;
+var graphs2loaded = false;
+var graphs3loaded = false;
+var loadGraph1 = function () {
+    if (graphs1loaded) {
+        return;
+    }
+    graphs1loaded = true;
+    $.getJSON("https://dogeanalytics.herokuapp.com/graphs/time-comparison/data/", function (result) {
+        var formattedData = {
+            labels: result.labels,
+            datasets: [
+                {
+                    label: "Response Time (ms)",
+                    fillColor: "rgba(200,150,50,0.5)",
+                    strokeColor: "rgba(200,150,50,0.8)",
+                    highlightFill: "rgba(200,150,50,0.75)",
+                    highlightStroke: "rgba(200,150,50,1)",
+                    data: result.data
+                }
+            ]
+        }
+        var canvas = $("#canvas1");
+        var ctx = canvas.get(0).getContext("2d");
+        var graph = new Chart(ctx).Bar(formattedData, {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    animation: true,
+                    animationSteps: 200,
+                    animationEasing: "easeOutQuart",
+                    scaleLabel: "<%= value + ' ms'%>"
+                }
+        );
+        $("#loader1").hide();
+    });
+}
+
+var loadGraph2 = function () {
+    if (graphs2loaded) {
+        return;
+    }
+    graphs2loaded = true;
+    $.getJSON("https://dogeanalytics.herokuapp.com/graphs/usage-summary/data/", function (result) {
+
+        var formattedData = [];
+        var randomColor = function (num) {
+            return Math.floor(Math.random() * num);
+        }
+        for (var i = 0; i < result.labels.length; i++) {
+            var r = randomColor(50) + 200;
+            var g = randomColor(50) + 90;
+            var b = randomColor(20);
+            var color = "rgb("
+                    + r + ","
+                    + g + ","
+                    + b + ")";
+            var fadedColor = "rgba("
+                    + r + ","
+                    + g + ","
+                    + b + ","
+                    + "0.5" + ")";
+            formattedData.push({value: result.data[i], label: result.labels[i], color: color, highlight: fadedColor});
+        }
+        var canvas = $("#canvas2");
+        var ctx = canvas.get(0).getContext("2d");
+        graph = new Chart(ctx).Doughnut(formattedData, {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    animation: true,
+                    animationSteps: 200,
+                    animationEasing: "easeOutQuart",
+                    scaleLabel: "<%= value + ' times'%>"
+                }
+        );
+        $("#loader2").hide();
+    });
+}
+
+var loadGraph3 = function () {
+    if (graphs3loaded) {
+        return;
+    }
+    graphs3loaded = true;
+
+    $.getJSON("https://dogeanalytics.herokuapp.com/graphs/usage-timeline/data/", function (result) {
+        var trimmedResults = {};
+
+        //TODO: move this to server side later (would prevent switching back and forth from dict and arrays) ----------------
+        for (var i = 0; i < result.labels.length; i++) {
+            var label = (humanized_time_span(result.labels[i])).toString();
+            var data = result.data[i];
+            if (!(label in trimmedResults)) {
+                trimmedResults[label] = 0;
+            }
+            trimmedResults[label] += data;
+        }
+
+        var trimmedResultsLabels = [];
+        var trimmedResultsData = [];
+        for (var k in trimmedResults) {
+            trimmedResultsLabels.unshift(k);
+            trimmedResultsData.unshift(trimmedResults[k]);
+        }
+        //-----------------------------------------------------------------------------
+
+        var formattedData = {
+            labels: trimmedResultsLabels,
+            datasets: [
+                {
+                    label: "Response Time (ms)",
+                    fillColor: "rgba(200,150,50,0.5)",
+                    strokeColor: "rgba(200,150,50,0.8)",
+                    highlightFill: "rgba(200,150,50,0.75)",
+                    highlightStroke: "rgba(200,150,50,1)",
+                    data: trimmedResultsData
+                }
+            ]
+        }
+        var canvas = $("#canvas3");
+        var ctx = canvas.get(0).getContext("2d");
+        var graph = new Chart(ctx).Line(formattedData, {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    animation: true,
+                    animationSteps: 200,
+                    animationEasing: "easeOutQuart",
+                    scaleLabel: "<%= value + ' calls'%>"
+                }
+        );
+        $("#loader3").hide();
+    });
+}
+
+
+</script>
+
+
+</body>
+
+</html>
