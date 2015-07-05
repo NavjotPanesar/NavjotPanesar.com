@@ -14,6 +14,7 @@
     <script src="js/controllers.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
     <script src="https://rawgithub.com/Pleasurazy/angularjs-media/master/app/lib/angularjs.media.directives.js" ></script>
+    <script src="js/angular-smooth-scroll.min.js"></script>
 
 
     <link href="css/style.css" rel="stylesheet">
@@ -26,13 +27,13 @@
     <title>Navjot Panesar</title>
 </head>
 
-<body ng-app="Home">
+<body id="body" ng-app="Home">
 
 <div ng-view></div>
 
 
 <span class="floating-action-button" style="background: #03a9f4" id="fab">
-    <a href="#intro">▲</a>
+    <a href="" scroll-to="body">▲</a>
 </span>
 
 
@@ -52,7 +53,6 @@
 
 <script src="js/bootstrap.min.js"></script>
 <script src="js/scroll-top.js"></script>
-<script src="js/smooth-auto-scroll.js"></script>
 
 </body>
 

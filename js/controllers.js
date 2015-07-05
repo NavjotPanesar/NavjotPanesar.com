@@ -24,7 +24,7 @@ angular.module("Comments", [])
     });
 
 var homeApp = angular.module('Home', [
-    'ngRoute', 'angularjs.media.directives', 'Comments']);
+    'ngRoute', 'angularjs.media.directives', 'Comments', 'smoothScroll']);
 
 var dogeApp = angular.module('Doge', ['Comments']);
 
