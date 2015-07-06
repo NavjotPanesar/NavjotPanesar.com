@@ -98,7 +98,6 @@ homeApp.controller('ViewPageCtrl', ['$scope', '$sce', '$routeParams', '$http',
             }
         })
             .success(function (data, status, headers, config) {
-                alert(data);
                 $scope.post = data;
                 $scope.post.content = $sce.trustAsHtml($scope.post.content);
             }).
@@ -110,10 +109,14 @@ homeApp.controller('ViewPageCtrl', ['$scope', '$sce', '$routeParams', '$http',
 
 
 homeApp.controller('GalleryCtrl', function ($scope, $http, $filter) {
-    $scope.page = {title: "Screenshots", description: "These screenshots are auto-uploaded from a modified version of Gyazo screen capture tool"};
-    $scope.images = [
-        {url: "2c7ae5.png"}
-    ];
+
+    $http.get('routes/route-get-gallery.php')
+        .success(function (data, status, headers, config) {
+            $scope.page = {title: "Screenshots", description: "These screenshots are auto-uploaded from a modified version of Gyazo screen capture tool"};
+            $scope.images = data;
+        }).
+        error(function (data, status, headers, config) {
+        });
 });
 
 

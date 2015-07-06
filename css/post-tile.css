@@ -40,7 +40,7 @@
     height: 150%;
     top: -50%;
     left: 0;
-    background:rgba(255,255,255,0.5);
+    background:rgba(255,255,255,0);
 
     cursor:pointer;
     -webkit-transition:top .2s ease-in-out;
@@ -52,7 +52,7 @@
 
 .post-tile-desc:hover {
     top: 0;
-    background:rgba(0,0,0,0);
+    background:rgba(255,255,255,0.3);
 }
 
 .post-tile-desc-inner {

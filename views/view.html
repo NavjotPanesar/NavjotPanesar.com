@@ -5,7 +5,7 @@
 
 <div ng-include="'partials/view-header.html'"></div>
 
-<div class="container panel card jumbotron" style="padding: 60px;">
+<div ng-if="post.content" class="container panel card jumbotron" style="padding: 60px;">
     <p ng-bind-html="post.content" id="content-area">
         <!-- bbcode will just have to be parsed server side, way easier than trying to hook a js lib into ang for this -->
     </p>

@@ -32,7 +32,7 @@ class Post{
         $this->thumb = $thumb;
 
         if($this->redirectType == "Play"){
-            $this->url = "view.php?title=$this->title&swf=$this->redirect";
+            $this->url = "#view/$this->title/$this->redirect";
         }else if($this->redirect != null){
             $this->url = $this->redirect;
         }

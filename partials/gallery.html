@@ -1,10 +1,8 @@
-<div class="container">
-    <section id="photos" style="background: none;">
+<div class="container" id="photos" >
         <!--yeah the old slider is broke af, need to rewrite that too ;(-->
         <a ng-repeat="image in images" href="slider.html#{{image.url}}">
-            <img ng-src="grab/{{image.url}}" class="photoGridElement"/>
+            <img ng-src="grab/{{image.img}}" class="photoGridElement"/>
         </a>
-    </section>
 </div>
 
 <script type="javascript">
