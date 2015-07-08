@@ -1,5 +1,11 @@
 <div class="panel panel-default"  ng-repeat="comment in comments">
-    <div class="panel-heading"><span class="label label-primary">{{comment.name}}</span> <span
-            class="label label-primary text-right">{{comment.date | asDate | date:'mediumDate'}}</span></div>
+    <div class="panel-heading"><span class="label label-primary">{{comment.name}}</span>
+        <span ng-if="comment.date" class="label label-primary text-right">
+            {{comment.date | asDate | date:'mediumDate'}}
+        </span>
+        <span ng-if="!comment.date" class="label label-primary text-right">
+            Now
+        </span>
+    </div>
     <div class="panel-body"><p>{{comment.content}}</p></div>
 </div>

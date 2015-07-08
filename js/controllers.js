@@ -29,6 +29,7 @@ var homeApp = angular.module('Home', [
 var dogeApp = angular.module('Doge', ['Comments']);
 
 dogeApp.controller('DogebotCtrl', function ($scope) {
+    $scope.title = "Dogebot";
     $scope.tweets = [
         {"content":"#dogebot #parrot I hate cats!"},
         {"content":"@you I hate cats!, Woof!"},

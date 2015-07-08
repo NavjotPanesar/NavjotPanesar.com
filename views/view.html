@@ -4,6 +4,11 @@
 
 
 <div ng-include="'partials/view-header.html'"></div>
+<style>
+    img{
+        max-width: 100%;
+    }
+</style>
 
 <div ng-if="post.content" class="container panel card jumbotron" style="padding: 60px;">
     <p ng-bind-html="post.content" id="content-area">
