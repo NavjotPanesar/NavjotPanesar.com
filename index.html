@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link id="bootstrapCss" href="css/bootstrap.min.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
 
@@ -17,7 +17,7 @@
     <script src="js/angular-smooth-scroll.min.js"></script>
 
 
-    <link href="css/style.css" rel="stylesheet">
+    <link id="styleCss" href="css/style.css" rel="stylesheet">
     <link href="css/floating-action-button.css" rel="stylesheet">
     <link href="css/post-tile.css" rel="stylesheet">
     <link href="css/photo-grid.css" rel="stylesheet">
@@ -39,7 +39,7 @@
 
 <footer style="margin: 20px 0">
     <div class="container">
-        <a href="troll.php"><i style="color: #6495ED;" class="fa fa-clock-o fa-3x"></i></a>
+        <a href="" onclick="toggleTimeMachine();"><i style="color: #6495ED;" class="fa fa-clock-o fa-3x"></i></a>
 
         <div class="contact" style="float:right;">
             <a href="https://twitter.com/n4vjot"><i class="fa fa-twitter fa-3x"></i></a>
@@ -52,7 +52,23 @@
 </footer>
 
 <script src="js/bootstrap.min.js"></script>
-<script src="js/scroll-top.js"></script>
+<script>
+
+    var timeMachineEnabled = false;
+    var toggleTimeMachine = function(){
+        timeMachineEnabled = !timeMachineEnabled;
+
+        var selectCss = function(linkId, timeMachineCss, regularCss){
+            var href = timeMachineEnabled ? timeMachineCss : regularCss;
+            var css = document.getElementById(linkId);
+            css.setAttribute('href', href);
+        }
+
+        selectCss('bootstrapCss', 'css/bootstrap-geo.min.css', 'css/bootstrap.min.css')
+        selectCss('styleCss', '', 'css/style.css')
+    }
+
+</script>
 
 </body>
 
