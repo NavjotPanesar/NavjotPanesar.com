@@ -11,6 +11,11 @@ section {
     background: none;
 }
 
+.label{
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
 .label-primary {
     background-color: #03a9f4;
 }
