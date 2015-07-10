@@ -1,6 +1,6 @@
 <fieldset>
 
-    <form class="form-horizontal" id="post" style="display:none;">
+    <form class="form-horizontal" ng-if="isCommentFormOpened" style="display:none;">
         <div class="form-group">
             <label for="inputName" class="col-lg-2 control-label">Name</label>
 
@@ -27,8 +27,7 @@
         </div>
 
     </form>
-
-    <span id="commentButton" class="btn btn-primary btn-lg btn-block" role="button">Add a comment</span><BR>
+    <span ng-click="isCommentFormOpened = !isCommentFormOpened" class="btn btn-primary btn-lg btn-block" role="button">Add a comment</span><BR>
 </fieldset>
 
 
