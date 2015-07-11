@@ -71,3 +71,30 @@ homeControllers.controller('GalleryCtrl', function ($scope, $http, $filter) {
         error(function (data, status, headers, config) {
         });
 });
+
+homeControllers.controller('WorkListCtrl', function ($scope, $http, $filter) {
+    $scope.workItems = [
+        {
+            company: "Blackberry",
+            position: "Software Tools Developer Co-op",
+            date: "2014",
+            description: "pull this from resume or something",
+            image: "http://www.userlogos.org/files/logos/macleod.mac/blackberry_logo_black_u.png"
+        },
+        {
+            company: "Pivotal Labs",
+            position: "Agile Engineering Co-op",
+            date: "2014",
+            description: "pull this from resume or something",
+            image: "https://pbs.twimg.com/profile_images/585166735092936704/AngWhIjh.png"
+        },
+        {
+            company: "Zynga",
+            position: "Software Engineering (Games) Co-op",
+            date: "2015",
+            description: "pull this from resume or something",
+            image: "https://pbs.twimg.com/profile_images/2247033532/New_Zynga_Logo.jpg"
+        }
+    ];
+});
+

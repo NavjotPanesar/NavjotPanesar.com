@@ -17,36 +17,74 @@
 
         <BR>
 
-
         <style>
-            .work-item{
-                display: inline;
-            }
-            .work-img{
+            .work-img {
                 background: white;
                 max-height: 200px;
+                padding: 10px;
+                transition: padding .3s;
             }
-            .work-item-desc{
+
+            .work-img-hover {
+                padding: 5px;
+            }
+
+            .work-desc {
+                background-color: #03a9f4;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                transition: opacity .3s;
+            }
+
+            .work-desc-hover {
+                opacity: 0.8;
+            }
+            .work-items{
+
             }
         </style>
         <div class="row">
-            <div class="col-sm-4">
-                <div class="panel">
-                    <img class="work-img" src="images/blackberry.jpg"/>
-                </div>
-            </div>
-            <div class="col-sm-4" >
-                <div class="panel">
-                    <img class="work-img" src="https://pbs.twimg.com/profile_images/585166735092936704/AngWhIjh.png"/>
-                </div>
-            </div>
-            <div class="col-sm-4" >
-                <div class="panel">
-                    <img class="work-img" src="https://pbs.twimg.com/profile_images/2247033532/New_Zynga_Logo.jpg"/>
+
+            <div class="col-sm-4" ng-repeat="work in workItems" class="work-items">
+                <div class="panel"  onmouseover="propogateHover(this);" onmouseout="removeHover(this);" style="cursor: pointer; cursor: hand;">
+                    <a href="" style="text-decoration: none;">
+                            <img class="work-img" src="{{work.image}}"/>
+                        <div class="work-desc">
+                            <h4 style="  font-size: 20px;  line-height: 24px;  margin-top: 10px;  margin-bottom: 5px;  color: white;">
+                                {{work.company}}, {{work.date}}</h4>
+
+                            <p style="  font-size: 12px;  line-height: 18px;  color: #e4f5f5;">{{work.position}}</p>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
 
+        <script>
+            var propogateHover = function(container){
+                var children = container.children[0].children;
+                for (var i = 0; i < children.length; i++) {
+                    var child = children[i];
+                    if(i == 0){
+                        child.className += " work-img-hover";
+                    } else if(i == 1){
+                        child.className += " work-desc-hover";
+                    }
+                }
+            }
+
+            var removeHover = function(container){
+                var children = container.children[0].children;
+                for (var i = 0; i < children.length; i++) {
+                    var child = children[i];
+                    if(i == 0){
+                        child.className =  child.className.replace(" work-img-hover","");
+                    } else if(i == 1){
+                        child.className = child.className.replace(" work-desc-hover","");
+                    }
+                }
+            }
+        </script>
 
 
         <BR>
