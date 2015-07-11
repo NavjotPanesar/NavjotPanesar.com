@@ -7,7 +7,7 @@
             Get <a href="http://www.adobe.com/go/getflash">Adobe Flash Player</a>
         </div>
 
-        <div id="splash" class="splash" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex;justify-content: center;align-items: center;">
+        <div id="splash" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex;justify-content: center;align-items: center;background: #03a9f4;">
             <div>
                 <div style="background-color: white; display: block" class="spinner"></div>
                 <p id="progress-text" style="text-align: center; color: white"></p>
@@ -30,7 +30,7 @@
     attributes.align = "";
     //This function is invoked by SWFObject once the <object> has been created
 
-    $("#splash").hide();
+   $("#splash").show();
     var updateTimer;
     function updateSwf(e)
     {
@@ -39,7 +39,7 @@
         }
         if(e.ref.PercentLoaded() == 100)
         {
-            $("#splash").hide(1000);
+            $("#splash").fadeOut(500);
             window.clearInterval(updateTimer);
         }
         $("#progress-text").text(e.ref.PercentLoaded() + "%");
