@@ -16,3 +16,15 @@ homeApp.filter("asDate", function () {
         return new Date(input);
     }
 });
+
+
+homeApp.directive('prefetch', function() {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            element.bind('load', function() {
+                    document.getElementById("splash").style.display = 'none';
+            });
+        }
+    };
+});
