@@ -124,3 +124,7 @@ section {
     padding-bottom: 10px;
     border-radius: 0;
 }
+
+.splash {
+    background: #03a9f4;
+}

@@ -1,28 +1,17 @@
-<div class="container">
-    </BR>
-    <div class="alert alert-dismissable alert-warning" style="display: none;" id="loadingPopup">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Loading</strong> Please wait.
-    </div>
-    <div class="progress progress-striped active" id="progBarContainer" style="display: none;">
-        <div id="progBar" class="progress-bar" style="width: 0%;"></div>
-    </div>
-    <div class="alert alert-dismissable alert-success" style="display: none;" id="finishedPopup">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Finished Loading</strong> SWF file <?php echo $title; ?> succesfully loaded!
-    </div>
-    <div class="alert alert-dismissable alert-danger" style="display: none;" id="errorPopup">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Error Loading</strong> SWF file <?php echo $title; ?>
-    </div>
+<BR/>
+<div class="container well well-lg">
 
-</div>
+    <div class = "" style="text-align: center; position: relative;">
 
-
-<div class="container">
-    <div class = "well well-lg" style="text-align: center">
         <div id="flashContent">
             Get <a href="http://www.adobe.com/go/getflash">Adobe Flash Player</a>
+        </div>
+
+        <div id="splash" class="splash" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex;justify-content: center;align-items: center;">
+            <div>
+                <div style="background-color: white; display: block" class="spinner"></div>
+                <p id="progress-text" style="text-align: center; color: white"></p>
+            </div>
         </div>
     </div>
 </div>
@@ -41,26 +30,24 @@
     attributes.align = "";
     //This function is invoked by SWFObject once the <object> has been created
 
+    $("#splash").hide();
     var updateTimer;
     function updateSwf(e)
     {
+        if(e.ref.PercentLoaded() == 0){
+            $("#splash").show();
+        }
         if(e.ref.PercentLoaded() == 100)
         {
-            $("#finishedPopup").show(1000);
-            $("#progBarContainer").hide(1000);
-            $("#loadingPopup").hide(1000);
+            $("#splash").hide(1000);
             window.clearInterval(updateTimer);
         }
-        $("#progBar").css("width",e.ref.PercentLoaded() + "%");
+        $("#progress-text").text(e.ref.PercentLoaded() + "%");
     }
 
     var callback = function (e){
         if(e.success){
-            $("#progBarContainer").show(1000);
-            $("#loadingPopup").show(1000);
             updateTimer = setInterval(function(){updateSwf(e)},10);
-        } else {
-            $("#errorPopup").show(1000);
         }
     };
     function showpanel() {
