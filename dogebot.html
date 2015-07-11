@@ -136,9 +136,9 @@
                 <h4 class="media-heading small" style="margin-bottom: 0px;">You<b id="B_11">@you</b> <span
                         style="float:right;">5 Jul</span></h4>
                 {{tweet.content}}<br>
-                <img ng-if="tweet.open" ng-src="http://navjotpanesar.com/images/rekt.gif"  style="max-width: 400px; max-height: 400px; display: block;"/>
-                <i class="fa fa-youtube-play"></i>
-                <a ng-click="tweet.open = !tweet.open" style="cursor: pointer;">show media</a>
+                <img ng-if="tweet.img && tweet.open"  ng-src="{{tweet.img}}"  style="max-width: 400px; max-height: 400px; display: block;"/>
+                <i ng-if="tweet.img" class="fa fa-youtube-play"></i>
+                <a ng-if="tweet.img" ng-click="tweet.open = !tweet.open" style="cursor: pointer;">show media</a>
             </div>
         </div>
     </div>
