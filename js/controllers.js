@@ -1,22 +1,42 @@
 var homeControllers = angular.module('homeControllers', []);
 
-homeControllers.controller('FeaturedProjectListCtrl', function ($scope, $http) {
+homeControllers.controller('HomeCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
+    $scope.viewClass = '';
+    $scope.showMoreProjects = function(){
+        $scope.viewClass = 'slide';
+        $scope.$apply();
+        $location.path('projects');
+    }
+    $scope.showMoreBlogPosts = function(){
+        $scope.viewClass = 'slide';
+        $scope.$apply();
+        $location.path('blog');
+    }
+}]);
+
+
+homeControllers.controller('FeaturedProjectListCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
     $http.get("routes/route-featured-projects.php").success(
         function (response) {
             $scope.projects = response;
-            console.log(response);
         }
     );
-});
+}]);
 
-homeControllers.controller('ProjectListCtrl', function ($scope, $http) {
-    $http.get("routes/route-projects-all.php").success(
+homeControllers.controller('ProjectListCtrl', ['$scope', '$http', '$location',function ($scope, $http, $location) {
+    $scope.page = {title: "Projects", description: "Here you can find my side projects, as well as some hackathon submissions I've worked on as part of a team"};
+    $scope.projects = [];
+    $scope.goBack = function(){
+        $scope.viewClass = 'sliderev';
+        $scope.$apply();
+        $location.path('/');
+    };
+   $http.get("routes/route-projects-all.php").success(
         function (response) {
-            $scope.page = {title: "Projects", description: "Here you can find my side projects, as well as some hackathon submissions I've worked on as part of a team"};
             $scope.projects = response;
         }
     );
-});
+}]);
 
 
 homeControllers.controller('FeaturedBlogListCtrl', function ($scope, $http) {
@@ -28,17 +48,24 @@ homeControllers.controller('FeaturedBlogListCtrl', function ($scope, $http) {
 
 });
 
-homeControllers.controller('BlogListCtrl', function ($scope, $http) {
+homeControllers.controller('BlogListCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
 
+    $scope.goBack = function(){
+        $scope.viewClass = 'sliderev';
+        $scope.$apply();
+        $location.path('/');
+    };
+
+    $scope.blogPosts = [];
+    $scope.page = {title: "Blog", description: "I'm going to eventually start writing stuff, just you wait!"};
     $http.get("routes/route-blog-all.php").success(
         function (response) {
-            $scope.page = {title: "Blog", description: "I'm going to eventually start writing stuff, just you wait!"};
             $scope.blogPosts = response;
         }
     );
 
 
-});
+}]);
 
 homeControllers.controller('ViewPageCtrl', ['$scope', '$sce', '$routeParams', '$http',
     function ($scope, $sce, $routeParams, $http) {
@@ -97,4 +124,5 @@ homeControllers.controller('WorkListCtrl', function ($scope, $http, $filter) {
         }
     ];
 });
+
 
