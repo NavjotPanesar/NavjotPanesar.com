@@ -4,7 +4,6 @@ var homeApp = angular.module('Home', [
 homeApp.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.
         when("/", {templateUrl: "views/home.html", controller: "HomeCtrl"}).
-        when("/projects", {templateUrl: "views/projects.html", controller: "ProjectListCtrl"}).
         when("/blog", {templateUrl: "views/blog.html", controller: "BlogListCtrl"}).
         when("/gallery", {templateUrl: "views/gallery.html", controller: "GalleryCtrl"}).
         when("/view/:title/:swf?", {templateUrl: "views/view.html", controller: "ViewPageCtrl"}).

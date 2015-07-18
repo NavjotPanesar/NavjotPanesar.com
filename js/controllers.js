@@ -1,10 +1,6 @@
 var homeControllers = angular.module('homeControllers', []);
 
 homeControllers.controller('HomeCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
-    $scope.showMoreProjects = function(){
-        $scope.$apply();
-        $location.path('projects');
-    }
     $scope.showMoreBlogPosts = function(){
         $scope.$apply();
         $location.path('blog');
@@ -18,6 +14,13 @@ homeControllers.controller('FeaturedProjectListCtrl', ['$scope', '$http', '$loca
             $scope.projects = response;
         }
     );
+    $scope.showMoreProjects = function(){
+        $http.get("routes/route-projects-all.php").success(
+            function (response) {
+                $scope.projects.push(response[4]);
+            }
+        );
+    }
 }]);
 
 homeControllers.controller('ProjectListCtrl', ['$scope', '$http', '$location',function ($scope, $http, $location) {
