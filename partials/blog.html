@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-lg-6" ng-repeat="blogPost in blogPosts">
+    <div class="col-lg-6 animate" ng-repeat="blogPost in blogPosts">
         <div class="panel" style="  background-color: rgba(255, 255, 255, 0.8); padding: 20px 20px 30px 20px;">
             <h3>{{blogPost.title}}</h3>
 
@@ -23,3 +23,6 @@
         </div>
     </div>
 </div>
+
+
+<a style="width: 100%; margin: 20px 0;" class="btn btn-primary" href="" ng-click="toggleFunction();" role="button">{{toggleText}}</a>

@@ -8,38 +8,65 @@ homeControllers.controller('HomeCtrl', ['$scope', '$http', '$location', function
 }]);
 
 
+
 homeControllers.controller('FeaturedProjectListCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
-    $http.get("routes/route-featured-projects.php").success(
-        function (response) {
-            $scope.projects = response;
-        }
-    );
-    $scope.showMoreProjects = function(){
+
+    var showAllProjects = function(){
+        $scope.toggleText = "See Less";
+        $scope.toggleFunction = showFeaturedProjects;
         $http.get("routes/route-projects-all.php").success(
             function (response) {
-                $scope.projects.push(response[4]);
+                var newProject = $scope.calcDiff($scope.projects, response);
+                $scope.projects.push.apply($scope.projects, newProject);
             }
         );
     }
-}]);
 
-homeControllers.controller('ProjectListCtrl', ['$scope', '$http', '$location',function ($scope, $http, $location) {
-    $scope.page = {title: "Projects", description: "Here you can find my side projects, as well as some hackathon submissions I've worked on as part of a team"};
-    $scope.projects = [];
-   $http.get("routes/route-projects-all.php").success(
-        function (response) {
-            $scope.projects = response;
-        }
-    );
-}]);
+    var showFeaturedProjects = function(){
+        $scope.toggleText = "See More";
+        $scope.toggleFunction = showAllProjects;
+        $http.get("routes/route-featured-projects.php").success(
+            function (response) {
+                if($scope.projects){
+                    $scope.projects = $scope.calcSimilar($scope.projects, response);
+                } else {
+                    $scope.projects = response;
+                }
+            }
+        );
+    }
 
+    showFeaturedProjects();
+}]);
 
 homeControllers.controller('FeaturedBlogListCtrl', function ($scope, $http) {
-    $http.get("routes/route-featured-blog.php").success(
-        function (response) {
-            $scope.blogPosts = response;
-        }
-    );
+
+    var showAllBlogPosts = function(){
+        $scope.toggleText = "See Less";
+        $scope.toggleFunction = showFeaturedBlogPosts;
+        $http.get("routes/route-blog-all.php").success(
+            function (response) {
+                var newBlogPosts = $scope.calcDiff($scope.blogPosts, response);
+                $scope.blogPosts.push.apply($scope.blogPosts, newBlogPosts);
+            }
+        );
+    }
+
+    var showFeaturedBlogPosts = function(){
+        $scope.toggleText = "See More";
+        $scope.toggleFunction = showAllBlogPosts;
+        $http.get("routes/route-featured-blog.php").success(
+            function (response) {
+                if($scope.blogPosts){
+                    $scope.blogPosts = $scope.calcSimilar($scope.blogPosts, response);
+                } else {
+                    $scope.blogPosts = response;
+                }
+            }
+        );
+    }
+
+    showFeaturedBlogPosts();
 
 });
 

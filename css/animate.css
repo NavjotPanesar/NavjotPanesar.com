@@ -1,22 +1,35 @@
-.animate{
-    transition: all, 1s;
-}
-animate-enter,
-.animate-leave
-{
+.animate.ng-enter {
+    -webkit-transition: 1s;
+    transition: 1s;
     opacity: 0;
+    margin-top: -300px;
 }
 
-.animate-enter.animate-enter-active,
-.animate-leave {
+.animate.ng-enter-active {
+    margin-top: 0;
     opacity: 1;
-    top: 0;
-    height: 30px;
 }
 
-.animate-leave.animate-leave-active,
-.animate-enter {
+.animate.ng-leave {
+    -webkit-transition: 1s;
+    transition: 1s;
+
+    margin-top: 0;
+    opacity: 1;
+}
+
+.animate.ng-leave-active {
     opacity: 0;
-    top: -50px;
-    height: 0px;
+    margin-top: -300px;
+}
+
+.animate.ng-move {
+    -webkit-transition: 1s;
+    transition: 1s;
+
+    background: gold;
+}
+
+.animate.ng-move-active {
+    background: #fff;
 }
