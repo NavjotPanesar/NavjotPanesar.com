@@ -1,10 +1,6 @@
 var homeControllers = angular.module('homeControllers', []);
 
 homeControllers.controller('HomeCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
-    $scope.showMoreBlogPosts = function(){
-        $scope.$apply();
-        $location.path('blog');
-    }
 }]);
 
 
@@ -121,21 +117,21 @@ homeControllers.controller('WorkListCtrl', function ($scope, $http, $filter) {
             position: "Software Tools Developer Co-op",
             date: "2014",
             description: "pull this from resume or something",
-            image: "http://www.userlogos.org/files/logos/macleod.mac/blackberry_logo_black_u.png"
+            image: "images/work/bb_logo.png"
         },
         {
             company: "Pivotal Labs",
             position: "Agile Engineering Co-op",
             date: "2014",
             description: "pull this from resume or something",
-            image: "https://pbs.twimg.com/profile_images/585166735092936704/AngWhIjh.png"
+            image: "images/work/pvtl_logo.png"
         },
         {
             company: "Zynga",
             position: "Software Engineering (Games) Co-op",
             date: "2015",
             description: "pull this from resume or something",
-            image: "https://pbs.twimg.com/profile_images/2247033532/New_Zynga_Logo.jpg"
+            image: "images/work/zynga_logo.jpg"
         }
     ];
 });
