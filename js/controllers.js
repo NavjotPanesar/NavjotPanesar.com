@@ -1,14 +1,11 @@
 var homeControllers = angular.module('homeControllers', []);
 
 homeControllers.controller('HomeCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
-    $scope.viewClass = '';
     $scope.showMoreProjects = function(){
-        $scope.viewClass = 'slide';
         $scope.$apply();
         $location.path('projects');
     }
     $scope.showMoreBlogPosts = function(){
-        $scope.viewClass = 'slide';
         $scope.$apply();
         $location.path('blog');
     }
@@ -26,11 +23,6 @@ homeControllers.controller('FeaturedProjectListCtrl', ['$scope', '$http', '$loca
 homeControllers.controller('ProjectListCtrl', ['$scope', '$http', '$location',function ($scope, $http, $location) {
     $scope.page = {title: "Projects", description: "Here you can find my side projects, as well as some hackathon submissions I've worked on as part of a team"};
     $scope.projects = [];
-    $scope.goBack = function(){
-        $scope.viewClass = 'sliderev';
-        $scope.$apply();
-        $location.path('/');
-    };
    $http.get("routes/route-projects-all.php").success(
         function (response) {
             $scope.projects = response;
@@ -49,15 +41,8 @@ homeControllers.controller('FeaturedBlogListCtrl', function ($scope, $http) {
 });
 
 homeControllers.controller('BlogListCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
-
-    $scope.goBack = function(){
-        $scope.viewClass = 'sliderev';
-        $scope.$apply();
-        $location.path('/');
-    };
-
-    $scope.blogPosts = [];
     $scope.page = {title: "Blog", description: "I'm going to eventually start writing stuff, just you wait!"};
+    $scope.blogPosts = [];
     $http.get("routes/route-blog-all.php").success(
         function (response) {
             $scope.blogPosts = response;
