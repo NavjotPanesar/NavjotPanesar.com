@@ -60,10 +60,6 @@ section {
     color: #03a9f4;
 }
 
-.hero-header h1 {
-    color: white;
-}
-
 .hero-intro {
     min-height: 100vh;
     display: flex;
@@ -73,6 +69,10 @@ section {
 
 .hero-header {
     background: #8EC2DA url('../assets/hero-back.jpg') fixed top right;
+}
+
+.hero-header-frosted {
+    background: #8EC2DA url('../assets/hero-back-frosted.jpg') fixed top right;
 }
 
 .hero-layer-blue {
@@ -109,6 +109,15 @@ section {
 .hero-header p{
     color: lightyellow;
 }
+
+.hero-header-frosted h1{
+    color: white;
+}
+
+.hero-header-frosted p{
+    color: lightyellow;
+}
+
 
 
 .btn-primary:hover {
