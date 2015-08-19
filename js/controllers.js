@@ -5,7 +5,7 @@ homeControllers.controller('HomeCtrl', ['$scope', '$http', '$location', function
 
 
 
-homeControllers.controller('FeaturedProjectListCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
+homeControllers.controller('FeaturedProjectListCtrl', ['$scope', '$http', '$location', '$modal', function ($scope, $http, $location, $modal) {
 
     var showAllProjects = function(){
         $scope.toggleText = "See Less";
@@ -16,7 +16,7 @@ homeControllers.controller('FeaturedProjectListCtrl', ['$scope', '$http', '$loca
                 $scope.projects.push.apply($scope.projects, newProject);
             }
         );
-    }
+    };
 
     var showFeaturedProjects = function(){
         $scope.toggleText = "See More";
@@ -30,7 +30,22 @@ homeControllers.controller('FeaturedProjectListCtrl', ['$scope', '$http', '$loca
                 }
             }
         );
-    }
+    };
+
+    $scope.animationsEnabled = true;
+    $scope.openProject = function(project){
+        $scope.selectedProject = project;
+        var modalInstance = $modal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: 'views/project-modal.html',
+            controller: 'ProjectModalCtrl',
+            resolve: {
+                selectedProject: function () {
+                    return $scope.selectedProject;
+                }
+            }
+        });
+    };
 
     showFeaturedProjects();
 }]);
@@ -63,7 +78,6 @@ homeControllers.controller('FeaturedBlogListCtrl', function ($scope, $http) {
     }
 
     showFeaturedBlogPosts();
-
 });
 
 homeControllers.controller('BlogListCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
@@ -197,6 +211,15 @@ homeControllers.controller('WorkListCtrl', ['$scope', '$http', '$filter', '$moda
 homeControllers.controller('WorkModalCtrl', function ($scope, $modalInstance, selectedWorkItem) {
 
     $scope.work = selectedWorkItem;
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+});
+
+homeControllers.controller('ProjectModalCtrl', function ($scope, $modalInstance, selectedProject) {
+
+    $scope.project = selectedProject;
 
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
