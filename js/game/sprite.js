@@ -55,4 +55,4 @@ Sprite.prototype.intersects = function(rect) {
 
 Sprite.prototype.handleCollisions = function (entity) {
 
-}
+};

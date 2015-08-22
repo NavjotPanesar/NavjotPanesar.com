@@ -18,6 +18,10 @@ var DOWN_ARROW = 83;
 
 var startGame = function(){
     window.scrollTo(0, 0);
+    window.onscroll = function(){
+        syncEntities();
+    };
+
     canvas = document.getElementById('canvas');
     canvas.style.display = "block";
 
@@ -38,12 +42,14 @@ var startGame = function(){
 
     entities.push(player);
 
-    addPageElementById("top-element");
+    document.getElementById("bottom-element").style.display = "block";
     addPageElementById("bottom-element");
     addPageElementById("heroheader");
     addPageElementsByClass("work-item");
     addPageElementsByClass("project-item");
     addPageElementsByClass("blog-item");
+    addPageElementsByClass("about-button");
+    addPageElementsByClass("see-more-button");
 
     then = Date.now();
     main();
@@ -108,12 +114,15 @@ var update = function (modifier) {
     if((player.state == "jumping" && player.y >= canvas.height - player.height && player.vy > 0 ) || (player.y <= 0 && yPos > 0 && player.vy < 0)){
         var yChange = player.vy * modifier;
         window.scrollTo(0, yPos +  yChange);
-        fixedEntities.forEach(function(entity) {
-            entity.y = -yPos + entity.originalY;
-        });
+        syncEntities();
     }
 };
 
+var syncEntities = function(){
+    fixedEntities.forEach(function(entity) {
+        entity.y = -yPos + entity.originalY;
+    });
+};
 
 var inheritsFrom = function (child, parent) {
     child.prototype = Object.create(parent.prototype);
