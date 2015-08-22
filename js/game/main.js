@@ -32,7 +32,7 @@ var startGame = function(){
     context.canvas.width  = window.innerWidth;
     context.canvas.height = window.innerHeight;
 
-    player = new Player('assets/Doge.png');
+    player = new Player('images/small_link_right.png');
 
     entities.push(player);
 
@@ -54,7 +54,7 @@ var addPageElement = function(element){
         return;
     }
     var rect = element.getBoundingClientRect();
-    var entity = new Sprite('assets/Doge.png');
+    var entity = new Sprite('');
     entity.x = rect.left;
     entity.y = rect.top;
     entity.width = rect.width;
@@ -181,6 +181,10 @@ function Player(spriteSrc) {
     this.jumpV = -1000;
     this.x = 1000;
     this.state = "jumping";
+    this.rightImage = new Image();
+    this.rightImage.src = 'images/small_link_right.png';
+    this.rightImageFloat = new Image();
+    this.rightImageFloat.src = 'images/small_link_right_float.png';
 }
 Player.prototype = new Sprite;
 
@@ -228,6 +232,7 @@ Player.prototype.handleCollisions = function (entity) {
 Player.prototype.update = function(modifier){
     Sprite.prototype.update.call(this);
     this.state = "jumping";
+    this.image = this.rightImage;
 
     //note handle collisions may update the state to grounded if we're on a platform
     blockingEntities.forEach(function(entity) {
@@ -260,6 +265,7 @@ Player.prototype.update = function(modifier){
     if(this.state == "jumping"){
         if(this.vy > 0 && UP_ARROW in keysDown){
             this.vy = 100;
+            this.image = this.rightImageFloat;
         } else {
             this.vy += this.gravity;
         }
@@ -278,7 +284,6 @@ Player.prototype.update = function(modifier){
     }
 
     console.log(this.state);
-
 
 }
 
