@@ -16,6 +16,13 @@ Sprite.prototype.construct = function(spriteSrc){
     this.image.src = spriteSrc;
 };
 
+Sprite.prototype.initPosition = function(x, y){
+    this.x = x;
+    this.y = y;
+    this.originalX = x;
+    this.originalY = y;
+};
+
 Sprite.prototype.update = function(modifier){
     if(this.isLoaded){
         context.clearRect(this.x,this.y,this.width, this.height);

@@ -9,6 +9,7 @@ function Player(spriteSrc) {
     this.state = "jumping";
     this.frameCounter = 0;
     this.frameCounterSpacing = 10;
+    this.direction = "Right";
     this.generateSprites();
 }
 Player.prototype = new Sprite;
@@ -17,10 +18,20 @@ Player.prototype.generateSprites = function(){
     var rightImageSet = this.genImageSet(['images/game/right_1.png']);
     var rightWalkingImageSet = this.genImageSet(['images/game/right_2.png', 'images/game/right_3.png']);
     var rightFlyingImageSet = this.genImageSet(['images/game/right_jet_1.png', 'images/game/right_jet_2.png', 'images/game/right_jet_3.png']);
+    var rightJumpingImageSet = this.genImageSet(['images/game/right_2.png']);
+    var leftImageSet = this.genImageSet(['images/game/left_1.png']);
+    var leftWalkingImageSet = this.genImageSet(['images/game/left_2.png', 'images/game/left_3.png']);
+    var leftFlyingImageSet = this.genImageSet(['images/game/left_jet_1.png', 'images/game/left_jet_2.png', 'images/game/left_jet_3.png']);
+    var leftJumpingImageSet = this.genImageSet(['images/game/left_2.png']);
     this.spriteSets = {
         'normalRight' : rightImageSet,
+        'normalLeft' : leftImageSet,
         'walkingRight' : rightWalkingImageSet,
-        'flyingRight' : rightFlyingImageSet
+        'walkingLeft' : leftWalkingImageSet,
+        'flyingRight' : rightFlyingImageSet,
+        'flyingLeft' : leftFlyingImageSet,
+        'jumpingRight' : rightJumpingImageSet,
+        'jumpingLeft' : leftJumpingImageSet
     };
 };
 
@@ -70,7 +81,12 @@ Player.prototype.handleCollisions = function (entity) {
     else{
         //top
         this.y = B.top - this.height;
-        this.vy = 0;
+        this.vy > 0 ? this.vy*=-1 : null;
+        this.vy *= 0.2;
+        console.log(this.vy);
+        if(Math.abs(this.vy) < 50){
+            this.vy = 0;
+        }
         this.state = "grounded";
     }
 };
@@ -98,10 +114,12 @@ Player.prototype.update = function(modifier){
         this.vx *= this.friction;
     }
     if (LEFT_ARROW in keysDown) { // Player holding left
-        this.vx = -100;
+        this.direction = "Left";
+        this.vx = -200;
     }
     if (RIGHT_ARROW in keysDown) { // Player holding right
-        this.vx = 100;
+        this.direction = "Right";
+        this.vx = 200;
     }
 
 
@@ -122,12 +140,10 @@ Player.prototype.update = function(modifier){
     if(this.y >= canvas.height - this.height){
         // we're scrolled to the bottom of the canvas
         this.y = canvas.height - this.height;
-        this.state = "falling";
     }
 
     if(this.y < 0){
         this.y = 0;
-        this.state = "rising";
     }
 
     if(this.x < 0){
@@ -151,22 +167,25 @@ Player.prototype.update = function(modifier){
 };
 
 Player.prototype.updateSprite = function(){
-    var spriteSet;
+    var spriteSubName;
     switch(this.state){
         case "jumping":
             if(UP_ARROW in keysDown){
-                spriteSet = this.spriteSets.flyingRight;
-                break;
+                spriteSubName = 'flying';
+            } else {
+                spriteSubName = 'jumping';
             }
+            break;
         default:
-            if(RIGHT_ARROW in keysDown){
-                spriteSet = this.spriteSets.walkingRight;
+            if(RIGHT_ARROW in keysDown || LEFT_ARROW in keysDown){
+                spriteSubName = 'walking';
                 break;
             }
-            spriteSet = this.spriteSets.normalRight;
+            spriteSubName = 'normal';
             break;
     }
 
+    var spriteSet = this.spriteSets[spriteSubName + this.direction];
     if(this.frameCounter >=  spriteSet.length * this.frameCounterSpacing){
         this.frameCounter = 0;
     }

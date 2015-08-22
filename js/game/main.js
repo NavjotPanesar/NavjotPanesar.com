@@ -15,6 +15,7 @@ var DOWN_ARROW = 83;
 
 
 
+
 var startGame = function(){
     canvas = document.getElementById('canvas');
     canvas.style.display = "block";
@@ -54,8 +55,7 @@ var addPageElement = function(element){
     }
     var rect = element.getBoundingClientRect();
     var entity = new Sprite('assets/Doge.png');
-    entity.x = rect.left;
-    entity.y = rect.top;
+    entity.initPosition(rect.left, rect.top);
     entity.width = rect.width;
     entity.height = rect.height;
     entities.push(entity);
@@ -103,12 +103,12 @@ var update = function (modifier) {
         entity.update(modifier);
     });
 
-    if(player.state == "falling" || (player.state == "rising" && yPos > 0)){
+    yPos = document.body.scrollTop;
+    if((player.state == "jumping" && player.y >= canvas.height - player.height) || (player.y <= 0 && yPos > 0)){
         var yChange = player.vy * modifier;
-        yPos += yChange;
-        window.scrollTo(0, yPos);
+        window.scrollTo(0, yPos +  yChange);
         fixedEntities.forEach(function(entity) {
-            entity.y -= yChange;
+            entity.y = -yPos + entity.originalY;
         });
     }
 };
