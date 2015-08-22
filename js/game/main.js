@@ -1,10 +1,12 @@
 var entities = [];
 var blockingEntities = [];
+var fixedEntities = [];
 var player = {};
 var context = {};
 var canvas = {};
 var then = {};
 var keysDown = {};
+var yPos = 0;
 
 var LEFT_ARROW = 65;
 var UP_ARROW = 87;
@@ -34,20 +36,49 @@ var startGame = function(){
 
     entities.push(player);
 
-    var heroRect = document.getElementById("heroheader").getBoundingClientRect();
-    var heroEntity = new Sprite("");
-    heroEntity.x = heroRect.left;
-    heroEntity.y = heroRect.top;
-    console.log(heroRect);
-    heroEntity.width = heroRect.width;
-    heroEntity.height = heroRect.height;
-    entities.push(heroEntity);
-    blockingEntities.push(heroEntity);
+    addPageElementById("bottom-element");
+    addPageElementById("heroheader");
+    addPageElementsByClass("work-item");
+    addPageElementsByClass("project-item");
+    addPageElementsByClass("blog-item");
+
 
     then = Date.now();
     main(canvas);
 
 };
+
+
+var addPageElement = function(element){
+    if(!element){
+        return;
+    }
+    var rect = element.getBoundingClientRect();
+    var entity = new Sprite('assets/Doge.png');
+    entity.x = rect.left;
+    entity.y = rect.top;
+    entity.width = rect.width;
+    entity.height = rect.height;
+    entities.push(entity);
+    blockingEntities.push(entity);
+    fixedEntities.push(entity);
+};
+
+var addPageElementById = function(elementId){
+    var elem = document.getElementById(elementId);
+    addPageElement(elem);
+};
+
+
+
+var addPageElementsByClass = function(className){
+    var elems = document.getElementsByClassName(className)
+    Array.prototype.forEach.call(elems, function(elem) {
+        addPageElement(elem);
+    });
+
+};
+
 
 
 // The main game loop
@@ -74,9 +105,14 @@ var update = function (modifier) {
         entity.update(modifier);
     });
 
-    blockingEntities.forEach(function(entity) {
-        player.handleCollisions(entity);
-    })
+    if(player.state == "falling"){
+        var yChange = player.vy * modifier;
+        yPos += yChange;
+        window.scrollTo(0, yPos);
+        fixedEntities.forEach(function(entity) {
+            entity.y -= yChange;
+        });
+    }
 };
 
 function Sprite(spriteSrc){
@@ -142,7 +178,8 @@ function Player(spriteSrc) {
     this.vy = 0;
     this.gravity = 15;
     this.friction = 0.8;
-    this.jumpV = -2000;
+    this.jumpV = -1000;
+    this.x = 1000;
     this.state = "jumping";
 }
 Player.prototype = new Sprite;
@@ -152,39 +189,51 @@ Player.prototype.handleCollisions = function (entity) {
         return;
     }
 
-    var ourRect = this.getRect();
-    var theirRect = entity.getRect();
+    var A = this.getRect();
+    var B = entity.getRect();
+    A.centerY = (0.5*(A.bottom + A.top));
+    A.centerX = (0.5*(A.left + A.right));
 
-    var crossedLeft = ourRect.right > theirRect.left && ourRect.right < theirRect.right ;
-    var crossedRight = ourRect.left < theirRect.right;
-    var crossedTop = ourRect.bottom > theirRect.top && ourRect.bottom < theirRect.bottom;
-    var crossedBottom = ourRect.top < theirRect.bottom;
+    B.centerY = (0.5*(B.bottom + B.top));
+    B.centerX = (0.5*(B.left + B.right));
 
-    var withinVertically = crossedTop && crossedBottom;
-    var withinHorizontally = crossedLeft && crossedRight;
+    var wy = (A.width + B.width) * (A.centerY - B.centerY);
+    var hx = (A.height + B.height) * (A.centerX - B.centerX);
 
-    if (crossedLeft && withinVertically) {
-     //   this.vx *= -1;
-        this.x = entity.x - this.width;
-    }
-    else  if (crossedRight && withinVertically) {
-    //    this.vx *= -1
-        this.x = theirRect.right;
-    }
-
-     else if (crossedTop && withinHorizontally) {
-        this.y = theirRect.top - ourRect.height;
-        this.state = "grounded";
-        this.vy = -100;
-    }
-    else  if (crossedBottom && withinHorizontally) {
-       this.vy = 0;
-        this.y = theirRect.bottom;
-    }
+    var side = "";
+    if (wy > hx)
+        if (wy > -hx){
+            //bottom
+            this.y = B.bottom + 1;
+            this.vy = 0;
+        }
+        else{
+            //left
+            this.x = B.left - this.width - 1;
+            this.vx *= -1;
+        }
+        else if (wy > -hx){
+            //right
+            this.x = B.right + 1;
+            this.vx *= -1;
+        }
+        else{
+            //top
+            this.y = B.top - this.height;
+            this.vy = 0;
+            this.state = "grounded";
+        }
 }
 
 Player.prototype.update = function(modifier){
     Sprite.prototype.update.call(this);
+    this.state = "jumping";
+
+    //note handle collisions may update the state to grounded if we're on a platform
+    blockingEntities.forEach(function(entity) {
+        player.handleCollisions(entity);
+    });
+
     if (UP_ARROW in keysDown) { // Player holding up
         if(this.state == "grounded"){
             this.state = "jumping";
@@ -195,7 +244,9 @@ Player.prototype.update = function(modifier){
      //   this.vx = 10;
     }
 
-    this.vx *= this.friction;
+    if(this.state != "jumping"){
+        this.vx *= this.friction;
+    }
     if (LEFT_ARROW in keysDown) { // Player holding left
         this.vx = -100;
     }
@@ -206,12 +257,29 @@ Player.prototype.update = function(modifier){
     this.x += this.vx * modifier;
     this.y += this.vy * modifier;
 
-    this.vy += this.gravity;
+    if(this.state == "jumping"){
+        if(this.vy > 0 && UP_ARROW in keysDown){
+            this.vy = 100;
+        } else {
+            this.vy += this.gravity;
+        }
+    }
+
+
 
     if(this.y >= canvas.height - this.height){
+        // we're scrolled to the bottom of the canvas
         this.y = canvas.height - this.height;
-        this.state = "grounded";
+        this.state = "falling";
     }
+
+    if(this.vy > 1000){
+        this.vy = 1000;
+    }
+
+    console.log(this.state);
+
+
 }
 
 

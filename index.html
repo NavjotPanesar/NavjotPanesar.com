@@ -36,7 +36,7 @@
 
 <body id="body" ng-app="Home">
 
-<canvas id="canvas"  style="width: 100%; height: 100vh; position: absolute; display: none;"></canvas>
+<canvas id="canvas"  style="width: 100%; height: 100vh; position: fixed; display: none; z-index: 300;"></canvas>
 
 </div>
 
@@ -52,8 +52,8 @@
 </span>
 
 
-<footer style="margin: 20px 0">
-    <div class="container">
+<footer style="margin-top: 20px">
+    <div  class="container">
         <a href="" onclick="toggleTimeMachine();"><i style="color: #6495ED;" class="fa fa-clock-o fa-3x"></i></a>
 
         <div class="contact" style="float:right;">
@@ -65,6 +65,8 @@
         </div>
     </div>
 </footer>
+<!-- yes, there's a reason this bottom-element exists ;) -->
+<div id="bottom-element" style="height: 100px;"></div>
 
 <script src="js/bootstrap.min.js"></script>
 <script src="js/timemachine.js"></script>

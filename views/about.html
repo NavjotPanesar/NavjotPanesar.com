@@ -46,7 +46,7 @@
         <div class="row">
 
             <div class="col-sm-4" ng-repeat="work in workItems" class="work-items">
-                <div class="panel"  onmouseover="propogateHover(this);" onmouseout="removeHover(this);" style="cursor: pointer; cursor: hand;" ng-click="openWorkItem(work);">
+                <div class="panel work-item"  onmouseover="propogateHover(this);" onmouseout="removeHover(this);" style="cursor: pointer; cursor: hand;" ng-click="openWorkItem(work);">
                     <a href="" style="text-decoration: none;">
                             <img class="work-img" src="{{work.image}}"/>
                         <div class="work-desc">
