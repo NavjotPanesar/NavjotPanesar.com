@@ -65,18 +65,18 @@ Player.prototype.handleCollisions = function (entity) {
     if (wy > hx)
         if (wy > -hx){
             //bottom
-            this.y = B.bottom + 1;
+            this.y = B.bottom;
             this.vy = 0;
         }
         else{
             //left
             this.x = B.left - this.width - 1;
-            this.vx *= -1;
+            this.vx = 0;
         }
     else if (wy > -hx){
         //right
         this.x = B.right + 1;
-        this.vx *= -1;
+        this.vx = 0;
     }
     else{
         //top
@@ -144,6 +144,9 @@ Player.prototype.update = function(modifier){
 
     if(this.y < 0){
         this.y = 0;
+        if(yPos <= 0){
+            this.vy = 0;
+        }
     }
 
     if(this.x < 0){
