@@ -294,6 +294,8 @@ var startGame = function () {
         delete keysDown[e.keyCode];
     }, false);
 
+    window.addEventListener('resize', resizeCanvas, false);
+
     context = canvas.getContext('2d');
 
     context.canvas.width = window.innerWidth;
@@ -383,6 +385,29 @@ var syncEntities = function () {
         entity.y = -yPos + entity.originalY;
     });
 };
+
+var resizeCanvas = function() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+
+    entities = [];
+    blockingEntities = [];
+    fixedEntities = [];
+    player = {};
+
+    player = new Player('images/small_link_right.png');
+    entities.push(player);
+
+    document.getElementById("bottom-element").style.display = "block";
+    addPageElementById("bottom-element");
+    addPageElementById("heroheader");
+    addPageElementsByClass("work-item");
+    addPageElementsByClass("project-item");
+    addPageElementsByClass("blog-item");
+    addPageElementsByClass("about-button");
+    addPageElementsByClass("see-more-button");
+}
 
 var inheritsFrom = function (child, parent) {
     child.prototype = Object.create(parent.prototype);
