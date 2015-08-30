@@ -8,14 +8,10 @@
 
 include_once('config.php');
 class DAL{
-    private static $instance = null;
     protected $db;
 
     public static function getDAL(){
-        if (null === static::$instance) {
-            static::$instance = new static();
-        }
-        return static::$instance;
+        return new DAL();
     }
 
     public function __construct(){
