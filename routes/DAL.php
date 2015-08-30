@@ -5,93 +5,155 @@
  * Date: 06/05/14
  * Time: 10:31 AM
  */
-include_once 'DB.php';
 
+include_once('config.php');
 class DAL{
+    private static $instance = null;
     protected $db;
-    function __construct(){
-        $this->db = new DB();
-        $this->db->connect();
+
+    public static function getDAL(){
+        if (null === static::$instance) {
+            static::$instance = new static();
+        }
+        return static::$instance;
     }
 
-    function getNavBarData(){
-        $result = $this->db->read("SELECT label, link, ico FROM navbardata");
-        return $result;
+    public function __construct(){
+        $connStr = new ConnStr();
+        if($_SERVER['HTTP_HOST'] == "localhost:63342")
+            $connStr = new debug();
+
+        $dsn = 'mysql:dbname='.$connStr->dbname.';host='.$connStr->host;
+        $username = $connStr->username;
+        $password = $connStr->password;
+        try {
+            $this->db = new PDO($dsn, $username, $password); // also allows an extra parameter of configuration
+        } catch(PDOException $e) {
+            die('Could not connect to the database:<br/>' . $e);
+        }
+    }
+
+    function query($query){
+        $statement = $this->db->prepare($query);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    function queryWithParams($query, $params){
+        $statement = $this->db->prepare($query);
+        $statement->execute($params);
+        return $statement->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    function getInt($query, $params)
+    {
+        $statement = $this->db->prepare($query);
+        $statement->execute($params);
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result[0]["COUNT(id)"];
     }
 
     function getGalleryImages(){
-        return $this->db->read("SELECT id FROM pictures");
+        $query = "SELECT uri FROM pictures";
+        $result = $this->query($query);
+        return $result;
     }
 
     function getFeaturedGalleryImages($num){
-        return $this->db->read("SELECT id FROM pictures limi $num");
+        $query = "SELECT id FROM pictures limit ?";
+        $params = array($num);
+        return $this->queryWithParams($query, $params);
     }
 
     function getPostsList($pageID){
-        $result = $this->db->read("SELECT title, description, ico, datePosted, redirect, content, redirectType, thumb FROM posts WHERE pageID = '$pageID' ORDER BY datePosted DESC");
+        $query = "SELECT title, description, ico, date, redirect, content, redirectType, thumb FROM posts WHERE pageID = ? ORDER BY date DESC";
+        $params = array($pageID);
+        $result = $this->queryWithParams($query, $params);
+        $this->insertCommentsForPostList($result);
+        $this->insertUrlForPostList($result);
         return $result;
     }
 
-    function getFeaturedPostsList($pageID){
-        $q =  "SELECT title, description, ico, datePosted, redirect, content, redirectType, thumb
+    function getFeaturedPostsList($pageID){;
+        $query = "SELECT title, description, ico, date, redirect, content, redirectType, thumb
             FROM posts
             INNER JOIN featured
             ON posts.id=featured.postID
-            WHERE featured.PageID = '$pageID'
-            AND posts.PageID = '$pageID'
-            ORDER BY datePosted DESC";
-        $result = $this->db->read($q);
+            WHERE featured.PageID = ?
+            AND posts.PageID = ?
+            ORDER BY date DESC";
 
-        return $result;
-    }
+        $params = array($pageID, $pageID);
 
-    function getFeaturedPostsListWithLimit($pageID, $limit){
-        $q =  "SELECT title, description, ico, datePosted, redirect, content, redirectType, thumb
-            FROM posts
-            INNER JOIN featured
-            ON posts.id=featured.postID
-            WHERE featured.PageID = '$pageID'
-            AND posts.PageID = '$pageID'
-            ORDER BY datePosted DESC LIMIT $limit";
-        $result = $this->db->read($q);
+        $result = $this->queryWithParams($query, $params);
+        $this->insertCommentsForPostList($result);
+        $this->insertUrlForPostList($result);
 
-        return $result;
-    }
-
-    function getPostsListSorted($pageID, $sort){
-        $result = $this->db->read("SELECT title, description, ico, datePosted, redirect, content, redirectType, thumb FROM posts WHERE pageID = '$pageID' ORDER BY datePosted $sort");
-        return $result;
-    }
-
-    function getPostsListSortedBy($pageID, $sortDirection, $sortBy){
-        $result = $this->db->read("SELECT title, description, ico, datePosted, redirect, content, redirectType, thumb FROM posts WHERE pageID = '$pageID' ORDER BY $sortBy $sortDirection");
         return $result;
     }
 
     function getNumComments($title){
-        $numComments = $this->db->getInt("SELECT COUNT(id) FROM comments WHERE title = '$title'");
+        $query = "SELECT COUNT(id) FROM comments WHERE title = ?";
+        $params = array($title);
+        $numComments = $this->getInt($query, $params);
         return $numComments;
     }
 
     function getSinglePostData($title){
-        $result = $this->db->read("SELECT title, description, ico, datePosted, redirect, content, redirectType, thumb FROM posts WHERE title = '$title'");
-        return $result;
+        $query = "SELECT title, description, ico, date, redirect, content, redirectType, thumb FROM posts WHERE title = ?";
+        $params = array($title);
+
+
+        $statement = $this->db->prepare($query);
+        $statement->execute($params);
+        $result = $statement->fetchAll(PDO::FETCH_OBJ);
+
+        $singleResult = $result[0];
+
+
+        $this->insertUrlForPost($singleResult);
+
+        return $singleResult;
     }
 
     function getComments($title){
-        $result = $this->db->read("SELECT name,comment,date FROM comments WHERE title = '$title' ORDER BY date DESC");
+        $query = "SELECT name,content,date FROM comments WHERE title = ? ORDER BY date DESC";
+        $params = array($title);
+
+        $result = $this->queryWithParams($query, $params);
         return $result;
     }
 
     function writeComment($name,$content,$email,$date,$title){
-        $this->db->write("INSERT INTO comments(name,comment,email,date,title)VALUES('$name','$content','$email','$date','$title')");
+        $query = "INSERT INTO comments(name,content,email,date,title)VALUES(:name,:content,:email,:date,:title)";
+        $params = array(':name' => $name, ':content' => $content,':email' =>  $email,':date' =>  $date,':title' =>  $title);
+
+        $statement = $this->db->prepare($query);
+        $statement->execute($params);
+        return $statement->rowCount();
     }
 
-    function writeAnalytic($tweetId, $command, $username, $time, $date){
-        $this->db->write("INSERT INTO analytics(id,command,username,time,date)VALUES('$tweetId','$command','$username','$time','$date')");
+    function insertCommentsForPostList($postList){
+        foreach($postList as $post){
+            $post->numComments = $this->getNumComments($post->title);
+        }
+    }
+
+    function insertUrlForPostList($postList){
+        foreach($postList as $post){
+            $this->insertUrlForPost($post);
+        }
+    }
+
+    function insertUrlForPost($post){
+        if($post->redirectType == "Play"){
+            $post->url = "#view/$post->title/$post->redirect";
+        }else if($post->redirect != null){
+            $post->url = $post->redirect;
+        }
     }
 
     function close(){
-        $this->db->close();
+        $this->db = null;
     }
 }

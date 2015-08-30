@@ -8,11 +8,13 @@
 
 
 
-include 'model/CommentModel.php';
+include 'DAL.php';
 include 'misc.php';
 
 $pageID = htmlspecialchars($_GET["page"]);
-$model = new CommentModel();
-$commentsList = $model->getComments($pageID);
+
+
+$dal = DAL::getDAL();
+$commentsList = $dal->getComments($pageID);
 
 echo json_encode($commentsList);

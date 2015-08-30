@@ -20,5 +20,4 @@ class debug
     public $password = "";
     public $dbname = "website";
 }
-
 ?>

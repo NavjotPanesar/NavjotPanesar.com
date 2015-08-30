@@ -2,14 +2,15 @@
 /**
  * Created by PhpStorm.
  * User: Navjot
- * Date: 4/20/2015
- * Time: 7:31 PM
+ * Date: 7/3/15
+ * Time: 11:23 PM
  */
-include 'model/PostModel.php';
+include_once 'DAL.php';
 include 'misc.php';
 
 $pageID = "Blog";
-$model = new PostModel();
-$postList = $model->getFeaturedPostsList($pageID);
 
-echo json_encode($postList);
+$dal = DAL::getDAL();
+$result = $dal->getFeaturedPostsList($pageID);
+
+echo json_encode($result);

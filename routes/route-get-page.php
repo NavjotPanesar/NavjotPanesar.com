@@ -6,12 +6,13 @@
  * Time: 12:38 PM
  */
 include_once("nbbc.php");
-include_once 'model/PostModel.php';
+include_once 'DAL.php';
 include 'misc.php';
 
 $page = htmlspecialchars($_GET['page']);
-$model = new PostModel();
-$data = $model->getSinglePost($page);
+
+$dal = DAL::getDAL();
+$data = $dal->getSinglePostData($page);
 
 $bbcode = new BBCode;
 

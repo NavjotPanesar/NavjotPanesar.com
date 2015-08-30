@@ -20,45 +20,32 @@ class DB {
         $connStr = new ConnStr();
         if($_SERVER['HTTP_HOST'] == "localhost:63342")
             $connStr = new debug();
-        $this->con = mysqli_connect($connStr->host,$connStr->username,$connStr->password,$connStr->dbname);
-        if (mysqli_connect_errno())
-        {
-            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+
+        $dsn = 'mysql:dbname='.$connStr->dbname.';host='.$connStr->host;
+        $username = $connStr->username;
+        $password = $connStr->password;
+        try {
+            $this->con = new PDO($dsn, $username, $password); // also allows an extra parameter of configuration
+        } catch(PDOException $e) {
+            die('Could not connect to the database:<br/>' . $e);
         }
     }
 
-    function read($query){
-        $returned = array();
-        if($result = $this->con->query($query)){
-            while($row = $result->fetch_row()){
-                array_push($returned, $row);
-            }
-            $result->close();
-        }
-        return $returned;
-    }
-
-    function write($query)
-    {
-        $result = mysqli_query($this->con,$query);
-        //$result->close();
+    function query($statement){
+        $result = $this->con->query($statement);
         return $result;
     }
 
-    function getInt($query)
+    function getInt($statement)
     {
-        $returned = array();
-        if($result = $this->con->query($query)){
-            while($row = $result->fetch_row()){
-                array_push($returned, $row);
-            }
-            $result->close();
+        $queryResult = $this->query($statement);
+        foreach($queryResult->FetchAll() as $queryRow) {
+            return $queryRow[0];
         }
-        return $returned[0][0];
     }
 
     function close(){
-        $this->con->close();
+        $this->con = null;
     }
 
 }

@@ -7,11 +7,10 @@
  */
 
 
-
-include 'model/GalleryModel.php';
+include_once 'DAL.php';
 include 'misc.php';
 
-$model = new GalleryModel();
-$imageList = $model->getImageList();
+$dal = DAL::getDAL();
+$result = $dal->getGalleryImages();
 
-echo json_encode($imageList);
+echo json_encode($result);

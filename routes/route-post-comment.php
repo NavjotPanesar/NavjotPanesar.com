@@ -6,7 +6,6 @@
  * Time: 9:47 PM
  */
 include 'DAL.php';
-include_once 'model/Comment.php';
 
 date_default_timezone_set('America/Toronto');
 
@@ -15,15 +14,13 @@ date_default_timezone_set('America/Toronto');
 //I really need to switch backend soon...
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
-
 $name = htmlspecialchars($request->name);
 $content = htmlspecialchars($request->content);
 $title = htmlspecialchars($request->page);
 $date = date("Y-m-d H:i:s");
 
-$dal = new DAL();
+$dal = DAL::getDAL();
 $dal->writeComment($name, $content, " ", $date, $title);
-$dal->close();
 
 echo "hi";
 

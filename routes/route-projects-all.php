@@ -5,12 +5,12 @@
  * Date: 4/20/2015
  * Time: 8:28 PM
  */
+include_once 'DAL.php';
+include 'misc.php';
 
-  include 'model/PostModel.php';
-  include 'misc.php';
+$pageID = "Projects";
 
-  $pageID = "Projects";
-  $model = new PostModel();
-  $postList = $model->getPostsList($pageID);
+$dal = DAL::getDAL();
+$result = $dal->getPostsList($pageID);
 
-  echo json_encode($postList);
+echo json_encode($result);
