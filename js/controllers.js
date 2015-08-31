@@ -220,6 +220,7 @@ homeControllers.controller('WorkModalCtrl', function ($scope, $modalInstance, se
 homeControllers.controller('ProjectModalCtrl', function ($scope, $modalInstance, selectedProject) {
 
     $scope.project = selectedProject;
+    $scope.currentSliderIndex = 0;
 
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');

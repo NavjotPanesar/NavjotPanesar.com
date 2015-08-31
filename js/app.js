@@ -1,5 +1,5 @@
 var homeApp = angular.module('Home', [
-    'ngRoute', 'Comments', 'smoothScroll', 'homeControllers','ngAnimate', 'ui.bootstrap']);
+    'ngRoute', 'Comments', 'smoothScroll', 'homeControllers','ngAnimate', 'ui.bootstrap', 'wallopSlider']);
 
 homeApp.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.

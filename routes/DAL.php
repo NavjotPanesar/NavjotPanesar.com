@@ -7,6 +7,7 @@
  */
 
 include_once('config.php');
+include_once('models/Post.php');
 class DAL{
     protected $db;
 
@@ -62,16 +63,16 @@ class DAL{
     }
 
     function getPostsList($pageID){
-        $query = "SELECT title, description, ico, date, redirect, content, redirectType, thumb FROM posts WHERE pageID = ? ORDER BY date DESC";
+        $query = "SELECT * FROM posts WHERE pageID = ? ORDER BY date DESC";
         $params = array($pageID);
-        $result = $this->queryWithParams($query, $params);
-        $this->insertCommentsForPostList($result);
-        $this->insertUrlForPostList($result);
+        $statement = $this->db->prepare($query);
+        $statement->execute($params);
+        $result = $statement->fetchAll(PDO::FETCH_CLASS, 'Post');
         return $result;
     }
 
     function getFeaturedPostsList($pageID){;
-        $query = "SELECT title, description, ico, date, redirect, content, redirectType, thumb
+        $query = "SELECT *
             FROM posts
             INNER JOIN featured
             ON posts.id=featured.postID
@@ -81,9 +82,9 @@ class DAL{
 
         $params = array($pageID, $pageID);
 
-        $result = $this->queryWithParams($query, $params);
-        $this->insertCommentsForPostList($result);
-        $this->insertUrlForPostList($result);
+        $statement = $this->db->prepare($query);
+        $statement->execute($params);
+        $result = $statement->fetchAll(PDO::FETCH_CLASS, 'Post');
 
         return $result;
     }
@@ -96,20 +97,33 @@ class DAL{
     }
 
     function getSinglePostData($title){
-        $query = "SELECT title, description, ico, date, redirect, content, redirectType, thumb FROM posts WHERE title = ?";
+        $query = "SELECT * FROM posts WHERE title = ? LIMIT 1";
         $params = array($title);
-
 
         $statement = $this->db->prepare($query);
         $statement->execute($params);
-        $result = $statement->fetchAll(PDO::FETCH_OBJ);
+        $result = $statement->fetchAll(PDO::FETCH_CLASS, 'Post');
 
         $singleResult = $result[0];
 
-
-        $this->insertUrlForPost($singleResult);
-
         return $singleResult;
+    }
+
+    function getImagesForPost($title){;
+        $query = "SELECT imageuri
+            FROM postimages
+            INNER JOIN posts
+            ON posts.id=postimages.postid
+            WHERE posts.title = ?
+            ORDER BY date DESC";
+
+        $params = array($title);
+
+        $statement = $this->db->prepare($query);
+        $statement->execute($params);
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
     }
 
     function getComments($title){

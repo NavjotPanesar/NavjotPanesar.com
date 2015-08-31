@@ -2,8 +2,19 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <div style="text-align: center; position: relative;">
-    <button type="button" class="close" ng-click="cancel();" style="padding: 2px; position: absolute; top: 0px; right: 0px;"> × </button>
-    <img ng-src="images/tiles/{{project.thumb}}" style="max-width: 100%; max-height: 50vh;">
+    <button type="button" class="close" ng-click="cancel();" style="padding: 2px; position: absolute; top: 0px; right: 0px; z-index: 99;"> × </button>
+    <img ng-if="!project.images.length" ng-src="images/tiles/{{project.thumb}}" style="max-width: 100%; max-height: 50vh;">
+
+            <!--<div ng-repeat="image in project.images" class="Wallop-item">-->
+                <!--<img ng-src="{{image.imageuri}}"/>-->
+            <!--</div>-->
+
+    <wallop-slider
+            ng-if="project.images.length"
+            data-animation="fade"
+            data-images="project.images"
+            data-current-item-index="currentSliderIndex">
+    </wallop-slider>
 
     <div class="work-desc">
         <h2 style="font-size: 20px;  line-height: 24px;  margin-top: 10px;  margin-bottom: 5px;  color: white;">
@@ -12,9 +23,9 @@
         <p style="font-size: 12px;  line-height: 18px;  color: #e4f5f5;">{{project.description}}</p>
     </div>
 
-    <a ng-if="{{project.github}}" href="{{project.github}}" style="margin-top: 0px;" ng-click="cancel();"><i
-            class="fa fa-github-alt">
-        Github</i></a>
+    <!--<a ng-if="{{project.github}}" href="{{project.github}}" style="margin-top: 0px;" ng-click="cancel();"><i-->
+            <!--class="fa fa-github-alt">-->
+        <!--Github</i></a>-->
 
     <p>{{project.content}}</p>
 
@@ -24,3 +35,4 @@
 
 
 </div>
+
