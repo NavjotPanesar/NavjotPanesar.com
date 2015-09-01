@@ -1,6 +1,6 @@
 <div class="container" id="photos" >
         <!--yeah the old slider is broke af, need to rewrite that too ;(-->
-        <a ng-repeat="image in images" href="slider.html#{{image.url}}">
+        <a ng-repeat="image in images track by image.uri" href="slider.html#{{image.url}}">
             <img ng-src="grab/{{image.uri}}" class="photoGridElement"/>
         </a>
 </div>

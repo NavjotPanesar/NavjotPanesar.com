@@ -12,7 +12,7 @@
         <p style="  font-size: 12px;  line-height: 18px;  color: #e4f5f5;">{{work.position}}</p>
     </div>
 
-    <div ng-repeat="tag in work.tags" class="label label-primary">
+    <div ng-repeat="tag in work.tags track by $index" class="label label-primary">
         {{tag}}
     </div>
 

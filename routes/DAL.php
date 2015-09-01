@@ -11,8 +11,14 @@ include_once('models/Post.php');
 class DAL{
     protected $db;
 
+    private static $_instance = null;
+
     public static function getDAL(){
-        return new DAL();
+        if (!self::$_instance) {
+            self::$_instance = new self();
+        }
+
+        return self::$_instance;
     }
 
     public function __construct(){

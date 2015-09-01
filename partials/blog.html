@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-lg-6 animate" ng-repeat="blogPost in blogPosts">
+    <div class="col-lg-6 animate" ng-repeat="blogPost in blogPosts track by blogPost.title">
         <div class="panel blog-item" style="  background-color: rgba(255, 255, 255, 0.8); padding: 20px 20px 30px 20px;">
             <h3>{{blogPost.title}}</h3>
 
