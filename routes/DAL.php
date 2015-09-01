@@ -114,8 +114,7 @@ class DAL{
             FROM postimages
             INNER JOIN posts
             ON posts.id=postimages.postid
-            WHERE posts.title = ?
-            ORDER BY date DESC";
+            WHERE posts.title = ?";
 
         $params = array($title);
 
