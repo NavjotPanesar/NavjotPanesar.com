@@ -132,13 +132,15 @@
         <div class="media" style="">
             <a class="pull-left" href="#">
                 <img ng-if="$even" class="media-object" style="width: 48px; height: 48px;"
-                     src="https://pbs.twimg.com/profile_images/459497400600522752/TO5xtY2x_400x400.jpeg" alt="twitpic">
-                <img ng-if="$odd" class="media-object" style="width: 48px; height: 48px;" src="assets/lettuce.jpg"
+                     src="assets/lettuce.jpg" alt="twitpic">
+                <img ng-if="$odd" class="media-object" style="width: 48px; height: 48px;" src="https://pbs.twimg.com/profile_images/459497400600522752/TO5xtY2x_400x400.jpeg"
                      alt="twitpic">
             </a>
 
             <div class="media-body">
-                <h4 class="media-heading small" style="margin-bottom: 0px;">You<b id="B_11">@you</b> <span
+                <h4 class="media-heading small" style="margin-bottom: 0px;" ng-if="$even">You <b id="B_11">@you</b> <span
+                        style="float:right;">5 Jul</span></h4>
+                <h4 class="media-heading small" style="margin-bottom: 0px;" ng-if="$odd">Dogebot <b id="B_11">@wild_doge</b> <span
                         style="float:right;">5 Jul</span></h4>
                 {{tweet.content}}<br>
                 <img ng-if="tweet.img && tweet.open"  ng-src="{{tweet.img}}"  style="max-width: 400px; max-height: 400px; display: block;"/>
