@@ -148,6 +148,15 @@ class DAL{
         return $statement->rowCount();
     }
 
+    function writeImage($uri){
+        $query = "INSERT INTO pictures(uri)VALUES(:uri)";
+        $params = array(':uri' => $uri);
+
+        $statement = $this->db->prepare($query);
+        $statement->execute($params);
+        return $statement->rowCount();
+    }
+
     function insertCommentsForPostList($postList){
         foreach($postList as $post){
             $post->numComments = $this->getNumComments($post->title);

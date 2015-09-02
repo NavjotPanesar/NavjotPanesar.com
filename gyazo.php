@@ -44,11 +44,9 @@ imagedestroy($image);
 // Return the image URI.
 echo $uri, $filename;
 
-include 'routes/DB.php';
-$db = new DB();
-$db->connect();
-$db->write("INSERT INTO pictures(id)VALUES('$filename')");
-$db->close();
+include 'routes/DAL.php';
+$dal = DAL::getDAL();
+$dal->writeImage($filename);
 
 $newFileName= "./thumbs/".$filename;
 $fileName= "./grab/".$filename;
