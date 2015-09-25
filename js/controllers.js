@@ -125,15 +125,17 @@ homeControllers.controller('GalleryCtrl', function ($scope, $http, $filter) {
 });
 
 homeControllers.controller('WorkListCtrl', ['$scope', '$http', '$filter', '$modal', function ($scope, $http, $filter, $modal) {
+    // should pull this into my DB someday.
     $scope.workItems = [
         {
             company: "Blackberry",
             position: "Software Tools Developer Co-op",
             date: "2014",
             description: [
-                "Wrote and maintained web tools in a collaborative environment using ASP.NET with JQuery and SQL",
-                "Creation of libraries for automated battery life testing in python",
-                "Investigated and resolved new tickets for bug fixes and feature requests using Git, Perforce, and SourceSafe for source control"
+                "Wrote and maintained web tools using ASP.NET with JQuery and SQL",
+                "Created libraries for automated battery life testing in python",
+                "Implemented scripts to setup lab equipment for broadcasting of cellular signals",
+                "Investigated and resolved tickets for bug fixes and feature requests using Git, Perforce, and SourceSafe for source control"
             ],
             tags: [
                 "C#",
@@ -152,9 +154,9 @@ homeControllers.controller('WorkListCtrl', ['$scope', '$http', '$filter', '$moda
             position: "Agile Engineering Co-op",
             date: "2014",
             description: [
-                "Collaborated via pair programming to create Android applications in Java",
-                "Effective use of tools such as Android Studio, Eclipse, Gradle, and Travis to write and deploy maintainable code quickly",
-                "Employed troubleshooting techniques such as analyzing open source cod eand pair programming"
+                "Created Android apps using agile and pair programming methodologies",
+                "Dealt with asynchronous data loading and concurrency issues",
+                "Employed troubleshooting techniques such as analyzing open source code and pair programming"
             ],
             tags: [
                 "Java",
@@ -173,12 +175,16 @@ homeControllers.controller('WorkListCtrl', ['$scope', '$http', '$filter', '$moda
             position: "Software Engineering (Games) Co-op",
             date: "2015",
             description: [
-                "Currently employed"
+                "Added new features to Chess with Friends Android",
+                "Dealt with situations that required efficient code and network data caching",
+                "Worked with Cocos2d-JS game engine in C++ using Android NDK",
+                "Successfully created and pitched game prototype outside of work hours"
             ],
             tags: [
                 "Android",
+                "NDK",
                 "C++",
-                "Cocos2Dx-JS",
+                "Cocos2D-JS",
                 "JavaScript",
                 "Java",
                 "Git",
