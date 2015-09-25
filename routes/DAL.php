@@ -115,12 +115,28 @@ class DAL{
         return $singleResult;
     }
 
-    function getImagesForPost($title){;
+    function getImagesForPost($title){
         $query = "SELECT imageuri
             FROM postimages
             INNER JOIN posts
             ON posts.id=postimages.postid
             WHERE posts.title = ?";
+
+        $params = array($title);
+
+        $statement = $this->db->prepare($query);
+        $statement->execute($params);
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
+    function getUrlsForPost($title){
+        $query = "SELECT *
+        FROM posturls
+        INNER JOIN posts
+        ON posts.id=posturls.postid
+        WHERE posts.title = ?";
 
         $params = array($title);
 

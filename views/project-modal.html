@@ -23,16 +23,15 @@
         <p style="font-size: 12px;  line-height: 18px;  color: #e4f5f5;">{{project.description}}</p>
     </div>
 
-    <!--<a ng-if="{{project.github}}" href="{{project.github}}" style="margin-top: 0px;" ng-click="cancel();"><i-->
-            <!--class="fa fa-github-alt">-->
-        <!--Github</i></a>-->
-
     <p>{{project.content}}</p>
 
-
-    <a style=" margin: 10px 0; display: inline-block" class="btn btn-primary btn-block" role="button"
+    <a ng-if="!project.urls.length" style=" margin: 10px 0; display: inline-block" class="btn btn-primary btn-block" role="button"
        href="{{project.url}}" ng-click="cancel();">VIEW</a>
 
+    <div ng-if="project.urls.length" ng-repeat="url in project.urls">
+        <a style=" margin-bottom: 10px; display: inline-block" class="btn btn-primary btn-block" role="button"
+           href="{{url.uri}}" ng-click="cancel();">{{url.label}}</a>
+    </div>
 
 </div>
 

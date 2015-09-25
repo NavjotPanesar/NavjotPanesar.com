@@ -20,6 +20,7 @@ class Post{
     public $numComments;
     public $url;
     public $images;
+    public $urls;
 
     function __construct() {
         $dal = DAL::getDAL();
@@ -32,5 +33,7 @@ class Post{
         }
 
         $this->images = $dal->getImagesForPost($this->title);
+
+        $this->urls = $dal->getUrlsForPost($this->title);
     }
 }
