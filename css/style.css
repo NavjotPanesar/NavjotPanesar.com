@@ -62,8 +62,11 @@ section {
 
 .hero-intro {
     min-height: 100vh;
+    display: -webkit-flex;
     display: flex;
+    -webkit-justify-content: center;
     justify-content: center;
+    -webkit-align-items: center;
     align-items: center;
 }
 
