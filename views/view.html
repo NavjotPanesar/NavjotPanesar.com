@@ -10,10 +10,53 @@
     }
 </style>
 
-<div ng-if="post.content" class="container panel card jumbotron" style="padding: 60px; background: white; position: relative; bottom: 60px;">
-    <p ng-bind-html="post.content" id="content-area">
+<div ng-if="post.content && !post.images.length" class="container panel card jumbotron" style="padding: 60px; background: white; position: relative; bottom: 60px;">
+    <p ng-bind-html="post.content" style="font-size: 18px;">
         <!-- bbcode will just have to be parsed server side, way easier than trying to hook a js lib into ang for this -->
     </p>
+</div>
+
+<div ng-if="post.images.length && !post.content" class="container panel card jumbotron" style="padding: 60px; background: white; position: relative; bottom: 60px;">
+
+    <wallop-slider
+            ng-if="post.images.length"
+            data-animation="fade"
+            data-images="post.images"
+            data-current-item-index="currentSliderIndex">
+    </wallop-slider>
+
+    <BR/>
+
+    <div ng-if="post.urls.length" ng-repeat="url in post.urls" style=" text-align: center;">
+        <a style=" margin-bottom: 10px; display: inline-block;" class="btn btn-primary btn-block" role="button"
+           href="{{url.uri}}" ng-click="cancel();">{{url.label}}</a>
+    </div>
+</div>
+
+<div ng-if="post.images.length && post.content" class="container panel card jumbotron" style="padding: 60px; background: white; position: relative; bottom: 60px;">
+
+    <div class="row">
+        <div class="col-lg-6 ">
+            <p ng-bind-html="post.content" style="font-size: 18px;">
+                <!-- bbcode will just have to be parsed server side, way easier than trying to hook a js lib into ang for this -->
+            </p>
+        </div>
+        <div class="col-lg-6 ">
+            <wallop-slider
+                    ng-if="post.images.length"
+                    data-animation="fade"
+                    data-images="post.images"
+                    data-current-item-index="currentSliderIndex">
+            </wallop-slider>
+        </div>
+    </div>
+
+    <BR/>
+
+    <div ng-if="post.urls.length" ng-repeat="url in post.urls" style=" text-align: center;">
+        <a style=" margin-bottom: 10px; display: inline-block;" class="btn btn-primary btn-block" role="button"
+           href="{{url.uri}}" ng-click="cancel();">{{url.label}}</a>
+    </div>
 </div>
 
 <div class="container panel card">
