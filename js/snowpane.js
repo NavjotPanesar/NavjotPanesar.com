@@ -33,6 +33,7 @@ var startPane = function () {
 
 
     var paneResize = function () {
+        context.clearRect(0,0,canvas.width,canvas.height);
         context.canvas.width = window.innerWidth;
         context.canvas.height = window.innerHeight;
         getPane();
