@@ -4,6 +4,7 @@ body {
 
 section {
     background-color: white;
+    min-height: 90vh;
 }
 
 .jumbotron {
@@ -35,7 +36,7 @@ section {
 .profile-img {
     padding: 10px;
     background-color: #eeeeee;
-    background-color: rgba(237, 237, 237, 0.60);
+    background-color: rgba(247, 247, 247, 1);
     overflow: hidden;
     max-width: 280px;
     max-height: 280px;
