@@ -12,6 +12,7 @@ var startPane = function () {
             context.canvas.width = pane.width;
             context.canvas.height = pane.height;
             elem.addEventListener("mousemove", mouseDown, false);
+            elem.addEventListener("mousedown", mouseDown, false);
             drawSnow();
         }
     };
