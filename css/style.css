@@ -71,11 +71,11 @@ section {
 }
 
 .hero-header {
-    background: #8EC2DA url('../assets/hero-back.jpg') fixed top right;
+    background: #8EC2DA url('../assets/hero-back-compressed.jpg') fixed top right;
 }
 
 .hero-header-frosted {
-    background: #8EC2DA url('../assets/hero-back-frosted.jpg') fixed top right;
+    background: #8EC2DA url('../assets/hero-back-frosted-compressed.jpg') fixed top right;
 }
 
 .hero-layer-blue {
