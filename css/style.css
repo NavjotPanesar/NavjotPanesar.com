@@ -156,3 +156,18 @@ section {
 .backButton:hover{
     opacity: 0.5;
 }
+
+
+#shovel{
+    position: absolute;
+    z-index: 4;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+    max-width: 50px;
+    transition: opacity 0.5s ease-in-out;
+    opacity:0.2;
+}
+#shovel:hover{
+    opacity:0.6;
+}
