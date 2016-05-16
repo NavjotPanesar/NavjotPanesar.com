@@ -15,6 +15,12 @@ homeApp.filter("asDate", function () {
     }
 });
 
+homeApp.filter('reverse', function() {
+    return function(items) {
+        return items.slice().reverse();
+    };
+});
+
 homeApp.run(function($rootScope) {
     $rootScope.calcDiff = function(a, b){
         var onlyInA = a.filter(function(current){
@@ -41,6 +47,7 @@ homeApp.run(function($rootScope) {
         return a;
     }
 });
+
 
 
 homeApp.directive("snowfall", function() {
@@ -91,7 +98,6 @@ homeApp.directive("snowfall", function() {
                 context.beginPath();
                 context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                 context.fill();
-
             };
 
             var entities = new Array(20);

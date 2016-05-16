@@ -126,89 +126,30 @@ homeControllers.controller('GalleryCtrl', function ($scope, $http, $filter) {
 
 homeControllers.controller('WorkListCtrl', ['$scope', '$http', '$filter', '$modal', function ($scope, $http, $filter, $modal) {
     // should pull this into my DB someday.
-    $scope.workItems = [
-        {
-            company: "Blackberry",
-            position: "Software Tools Developer Co-op",
-            date: "2014",
-            description: [
-                "Wrote and maintained web tools using ASP.NET with JQuery and SQL",
-                "Created libraries for automated battery life testing in python",
-                "Implemented scripts to setup lab equipment for broadcasting of cellular signals",
-                "Investigated and resolved tickets for bug fixes and feature requests using Git, Perforce, and SourceSafe for source control"
-            ],
-            tags: [
-                "C#",
-                "ASP.NET",
-                "JQuery",
-                "SQL",
-                "Python",
-                "Robot Framework",
-                "Perforce",
-                "SourceSafe"
-            ],
-            image: "images/work/bb_logo.png"
-        },
-        {
-            company: "Pivotal Labs",
-            position: "Agile Engineering Co-op",
-            date: "2014",
-            description: [
-                "Created Android apps using agile and pair programming methodologies",
-                "Dealt with asynchronous data loading and concurrency issues",
-                "Employed troubleshooting techniques such as analyzing open source code and pair programming"
-            ],
-            tags: [
-                "Java",
-                "Android",
-                "Git",
-                "Eclipse",
-                "Android Studio",
-                "ANT",
-                "Gradle",
-                "Travis CI"
-            ],
-            image: "images/work/pvtl_logo.png"
-        },
-        {
-            company: "Zynga",
-            position: "Software Engineering (Games) Co-op",
-            date: "2015",
-            description: [
-                "Added new features to Chess with Friends Android",
-                "Dealt with situations that required efficient code and network data caching",
-                "Worked with Cocos2d-JS game engine in C++ using Android NDK",
-                "Successfully created and pitched game prototype outside of work hours"
-            ],
-            tags: [
-                "Android",
-                "NDK",
-                "C++",
-                "Cocos2D-JS",
-                "JavaScript",
-                "Java",
-                "Git",
-                "Jenkins"
-            ],
-            image: "images/work/zynga_logo.jpg"
-        }
-    ];
 
 
-    $scope.animationsEnabled = true;
-    $scope.openWorkItem = function(workItem){
-        $scope.selectedWorkItem = workItem;
-        var modalInstance = $modal.open({
-            animation: $scope.animationsEnabled,
-            templateUrl: 'views/work-modal.html',
-            controller: 'WorkModalCtrl',
-            resolve: {
-                selectedWorkItem: function () {
-                    return $scope.selectedWorkItem;
-                }
-            }
+    $http.get('json/work.json')
+        .success(function (data, status, headers, config) {
+            $scope.workItems = data;
+            $scope.animationsEnabled = true;
+            $scope.openWorkItem = function(workItem){
+                $scope.selectedWorkItem = workItem;
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'views/work-modal.html',
+                    controller: 'WorkModalCtrl',
+                    resolve: {
+                        selectedWorkItem: function () {
+                            return $scope.selectedWorkItem;
+                        }
+                    }
+                });
+            };
+        }).
+        error(function (data, status, headers, config) {
         });
-    };
+
+
 
 
 }]);
