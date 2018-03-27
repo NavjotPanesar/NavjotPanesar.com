@@ -83,5 +83,46 @@
       "Git"
     ],
     "image": "images/work/ms.png"
+  },
+  {
+    "company": "Yelp",
+    "position": "Software Engineering Intern",
+    "date": "2016",
+    "description": [
+      "Developed Yelp Android features on the transaction growth team",
+      "Ran A/B Experimentation on delivery search flows and interfaces",
+      "Took ownership of implementing Yelp Cashback feature on Android "
+    ],
+    "tags": [
+      "Android",
+      "AB Testing",
+      "Python",
+      "Java",
+      "RxJava",
+      "Git",
+      "Jenkins"
+    ],
+    "image": "images/work/yelp.png"
+  },
+  {
+    "company": "Zynga",
+    "position": "Software Engineering (Games) Co-op",
+    "date": "2017",
+    "description": [
+      "Took ownership of adding new features to Boggle with Friends",
+      "Updated codebase to use Kotlin, Retrofit, and RxKotlin",
+      "Integrated Unity Ads SDK for watch to earn advertisement support"
+    ],
+    "tags": [
+      "Android",
+      "Kotlin",
+      "Retrofit",
+      "RxKotlin",
+      "Ads",
+      "Java",
+      "Git",
+      "Jenkins"
+    ],
+    "image": "images/work/zynga_logo.jpg"
   }
 ]
